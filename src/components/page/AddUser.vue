@@ -26,14 +26,17 @@
 					<el-form-item label="出生地">
 						<el-input v-model="form.birthlocation"></el-input>
 					</el-form-item>
-					<el-form-item label="工作地">
-						<el-input v-model="form.worklocation"></el-input>
+					<el-form-item label="居住地">
+						<el-input v-model="form.address"></el-input>
+					</el-form-item>
+					<el-form-item label="联系方式">
+						<el-input v-model="form.mobile"></el-input>
 					</el-form-item>
 					<el-form-item label="职位">
 						<el-input v-model="form.jobtitle"></el-input>
 					</el-form-item>
 					<el-form-item label="公司名称">
-						<el-input v-model="form.worklocation"></el-input>
+						<el-input v-model="form.company"></el-input>
 					</el-form-item>
 					<el-form-item label="年薪">
 						<el-input v-model="form.salary"></el-input>
@@ -87,8 +90,9 @@
 						label: '女'
 					}],
 					birthday: '',
+					mobile:'',
 					birthlocation: '',
-					worklocation: '',
+					address: '',
 					jobtitle: '',
 					company: '',
 					salary: '',
