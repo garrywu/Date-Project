@@ -32,6 +32,15 @@
 					<el-form-item label="联系方式">
 						<el-input v-model="form.mobile"></el-input>
 					</el-form-item>
+					<el-form-item label="最高学历">
+						<el-select v-model="form.education" placeholder="请选择">
+							<el-option key="1" label="博士及以上" value="1"></el-option>
+							<el-option key="2" label="硕士" value="2"></el-option>
+							<el-option key="3" label="本科" value="3"></el-option>
+							<el-option key="4" label="专科" value="4"></el-option>
+							<el-option key="5" label="高中及以下" value="5"></el-option>
+						</el-select>
+					</el-form-item>
 					<el-form-item label="职位">
 						<el-input v-model="form.jobtitle"></el-input>
 					</el-form-item>
@@ -61,7 +70,51 @@
 						<el-input type="textarea" rows="5" v-model="form.charactor"></el-input>
 					</el-form-item>
 					<el-form-item label="相亲要求">
+						<el-row>
+							<el-col :span="8">
+								<el-form-item label="接受离异">
+								<el-checkbox v-model="divorce"></el-checkbox>
+								</el-form-item>
+							</el-col>
+							<el-col :span="8">
+								<el-form-item label="接受有子">
+								<el-checkbox v-model="child"></el-checkbox>
+								</el-form-item>
+							</el-col>
+							<el-col :span="8">
+								<el-form-item label="接受外地">
+								<el-checkbox v-model="local"></el-checkbox>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="8">
+								<el-form-item label="房产数量">
+									<el-input v-model="targethouse"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="8">
+								<el-form-item label="年薪要求">
+									<el-input v-model="targetsalary"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="8">
+								<el-form-item label="学历要求">
+									<el-input v-model="targeteducation"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="12">
+								<el-form-item label="年龄范围">
+									<span>最多小几岁</span>
+									<el-input v-model="targetbirthmin"></el-input>
+									<span>最多大几岁</span>
+									<el-input v-model="targetbirthmax"></el-input>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-form-item label="特别需求">
 						<el-input type="textarea" rows="5" v-model="form.requirement"></el-input>
+						</el-form-item>
 					</el-form-item>
 					<el-form-item>
 						<el-button type="primary" @click="onSubmit">添加用户</el-button>
@@ -90,7 +143,8 @@
 						label: '女'
 					}],
 					birthday: '',
-					mobile:'',
+					education:'',
+					mobile: '',
 					birthlocation: '',
 					address: '',
 					jobtitle: '',
@@ -100,6 +154,14 @@
 					hobby: '',
 					divorce: '',
 					charactor: '',
+					child: '',
+					local: '',
+					child: '',
+					targethouse: '',
+					targetsalary: '',
+					targeteducation: '',
+					targetbirthmin: '',
+					targetbirthmax: '',
 					requirement: ''
 				}
 			}

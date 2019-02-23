@@ -45,6 +45,12 @@ export default new Router({
                     component: resolve => require(['../components/page/QueryUser.vue'], resolve),
                     meta: { title: '查询用户' }
                 },
+				                {
+				    // 富文本编辑器组件
+				    path: '/QueryResult',
+				    component: resolve => require(['../components/page/QueryResult.vue'], resolve),
+				    meta: { title: 'AI匹配结果' }
+				},
                 {
                     // markdown组件
                     path: '/markdown',
@@ -57,6 +63,12 @@ export default new Router({
                     component: resolve => require(['../components/page/Upload.vue'], resolve),
                     meta: { title: '文件上传' }   
                 },
+				                {
+				    // 相亲管理
+				    path: '/DateManagement',
+				    component: resolve => require(['../components/page/DateManagement.vue'], resolve),
+				    meta: { title: '相亲管理' }
+				},
                 {
                     // vue-schart组件
                     path: '/charts',

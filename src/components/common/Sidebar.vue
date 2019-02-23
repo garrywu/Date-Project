@@ -43,20 +43,25 @@
                         index: 'dashboard',
                         title: '系统首页'
                     },
-                    {
-                        icon: 'el-icon-lx-cascades',
-                        index: 'table',
-                        title: '基础表格'
-                    },
+//                     {
+//                         icon: 'el-icon-lx-cascades',
+//                         index: 'table',
+//                         title: '基础表格'
+//                     },
                     {
                         icon: 'el-icon-lx-copy',
                         index: 'tabs',
-                        title: 'tab选项卡'
+                        title: '信息中心'
                     },
+//                     {
+//                         icon: 'el-icon-lx-copy',
+//                         index: 'tabs',
+//                         title: 'tab选项卡'
+//                     },
                     {
                         icon: 'el-icon-lx-calendar',
                         index: '3',
-                        title: '表单相关',
+                        title: '用户管理',
                         subs: [
                             {
                                 index: 'AddUser',
@@ -66,12 +71,21 @@
 							    index: 'QueryUser',
 							    title: '查询用户'
 							},
+							{
+							    index: 'QueryResult',
+							    title: 'AI匹配结果'
+							},
                             {
                                 index: 'upload',
                                 title: '文件上传'
                             }
                         ]
                     },
+					{
+					    icon: 'el-icon-lx-emoji',
+					    index: 'DateManagement',
+					    title: '相亲管理'
+					},
                     {
                         icon: 'el-icon-lx-emoji',
                         index: 'icon',

@@ -7,58 +7,21 @@
 		</div>
 		<div class="container">
 			<div class="handle-box">
-				<el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
 				<el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
 				<el-button type="primary" icon="search" @click="search">搜索</el-button>
+				<el-button type="primary" icon="add" class="handle-del mr10" @click="handleAdd()">新增记录</el-button>
 			</div>
 			<el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
-				<el-table-column type="expand">
-					<template slot-scope="props">
-						<el-row>
-							<el-col :span="22">
-								<el-form label-position="left" inline class="demo-table-expand">
-									<el-form-item label="性别">
-										<span>{{ props.row.usersex }}</span>
-									</el-form-item>
-									<el-form-item label="出生地">
-										<span>{{ props.row.birthlocation }}</span>
-									</el-form-item>
-									<el-form-item label="职位">
-										<span>{{ props.row.jobtitle }}</span>
-									</el-form-item>
-									<el-form-item label="联系方式">
-										<span>{{ props.row.mobile }}</span>
-									</el-form-item>
-									<el-form-item label="年薪">
-										<span>{{ props.row.salary }}</span>
-									</el-form-item>
-									<el-form-item label="房产数量">
-										<span>{{ props.row.housenumber }}</span>
-									</el-form-item>
-									<el-form-item label="个人爱好">
-										<span>{{ props.row.hobby }}</span>
-									</el-form-item>
-									<el-form-item label="是否离异">
-										<span>{{ props.row.divorce }}</span>
-									</el-form-item>
-									<el-form-item label="个性描述"> <span>{{ props.row.charactor }}</span>
-									</el-form-item>
-									<el-form-item label="相亲要求"> <span>{{ props.row.requirement }}</span>
-									</el-form-item>
-								</el-form>
-							</el-col>
-							<el-col :span="2">
-									<el-button class=ai-search size='small' type="success" @click="onSearch">进行AI匹配</el-button>
-							</el-col>
-						</el-row>
-					</template>
-				</el-table-column>
 				<el-table-column type="selection" width="55" align="center"></el-table-column>
-				<el-table-column prop="birthdate" label="出生日期" sortable width="150">
+				<el-table-column prop="mmname" label="男方姓名" sortable width="150">
 				</el-table-column>
-				<el-table-column prop="username" label="姓名" width="120">
+				<el-table-column prop="mfname" label="女方姓名" width="120">
 				</el-table-column>
-				<el-table-column prop="worklocation" label="工作地" :formatter="formatter">
+				<el-table-column prop="mstarttime" label="起始时间" :formatter="formatter">
+				</el-table-column>
+				<el-table-column prop="mendtime" label="终止时间" :formatter="formatter">
+				</el-table-column>
+				<el-table-column prop="datestatus" label="相亲状态" :formatter="formatter">
 				</el-table-column>
 				<el-table-column label="操作" width="180" align="center">
 					<template slot-scope="scope">
@@ -72,6 +35,35 @@
 				</el-pagination>
 			</div>
 		</div>
+		
+		<el-dialog title="新增记录" :visible.sync="addVisible" width="60%">
+			<el-form ref="form" :model="form" label-width="50px">
+				<el-form-item label="男方姓名" width="20%">
+					<el-input width="30%" v-model="form.mmname"></el-input>
+				</el-form-item>
+				<el-form-item label="女方姓名" width="20%">
+					<el-input width="30%" v-model="form.mfname"></el-input>
+				</el-form-item>
+				<el-form-item label="起始时间" width="20%">
+					<el-input width="30%" v-model="form.mstarttime"></el-input>
+				</el-form-item>
+				<el-form-item label="终止时间" width="20%">
+					<el-input width="30%" v-model="form.mendtime"></el-input>
+				</el-form-item>
+				<el-form-item label="相亲状态">
+					<el-select v-model="form.datestatus" placeholder="请选择">
+						<el-option key="active" label="进行中" value="active"></el-option>
+						<el-option key="failed" label="失败" value="failed"></el-option>
+						<el-option key="success" label="成功" value="success"></el-option>
+					</el-select>
+				</el-form-item>
+		
+			</el-form>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="addVisible = false">取 消</el-button>
+				<el-button type="primary" @click="saveEdit">确 定</el-button>
+			</span>
+		</el-dialog>
 
 		<!-- 编辑弹出框 -->
 		<el-dialog title="编辑" :visible.sync="editVisible" width="60%">
@@ -186,6 +178,7 @@
 				is_search: false,
 				editVisible: false,
 				delVisible: false,
+				addVisible:false,
 				form: {
 					username: '',
 					birthdate: '',
@@ -254,6 +247,9 @@
 					address: item.address
 				}
 				this.editVisible = true;
+			},
+			handleAdd() {
+				this.addVisible = true;
 			},
 			handleDelete(index, row) {
 				this.idx = index;
