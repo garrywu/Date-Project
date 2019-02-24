@@ -48,7 +48,7 @@
 								</el-form>
 							</el-col>
 							<el-col :span="2">
-									<el-button class=ai-search size='small' type="success" @click="onSearch">进行AI匹配</el-button>
+									<el-button class=ai-search size='small' type="success" @click="aiSearch">进行AI匹配</el-button>
 							</el-col>
 						</el-row>
 					</template>
@@ -58,7 +58,7 @@
 				</el-table-column>
 				<el-table-column prop="username" label="姓名" width="120">
 				</el-table-column>
-				<el-table-column prop="worklocation" label="工作地" :formatter="formatter">
+				<el-table-column prop="address" label="住址" :formatter="formatter">
 				</el-table-column>
 				<el-table-column label="操作" width="180" align="center">
 					<template slot-scope="scope">
@@ -74,8 +74,8 @@
 		</div>
 
 		<!-- 编辑弹出框 -->
-		<el-dialog title="编辑" :visible.sync="editVisible" width="60%">
-			<el-form ref="form" :model="form" label-width="50px">
+		<el-dialog title="编辑" :visible.sync="editVisible" width="40%">
+			<el-form ref="form" :model="form" label-width="70px">
 				<el-form-item label="姓名" width="40%">
 					<el-input width="30%" v-model="form.username"></el-input>
 				</el-form-item>
@@ -283,6 +283,12 @@
 				this.tableData.splice(this.idx, 1);
 				this.$message.success('删除成功');
 				this.delVisible = false;
+			},
+			aiSearch(){
+				this.$router.push({
+					name: 'QueryResult',
+					params: { cal: 'ais' }
+				})
 			}
 		}
 	}

@@ -17,11 +17,11 @@
 				</el-table-column>
 				<el-table-column prop="mfname" label="女方姓名" width="120">
 				</el-table-column>
-				<el-table-column prop="mstarttime" label="起始时间" :formatter="formatter">
+				<el-table-column prop="mstarttime" label="起始时间">
 				</el-table-column>
-				<el-table-column prop="mendtime" label="终止时间" :formatter="formatter">
+				<el-table-column prop="mendtime" label="终止时间">
 				</el-table-column>
-				<el-table-column prop="datestatus" label="相亲状态" :formatter="formatter">
+				<el-table-column prop="datestatus" label="相亲状态">
 				</el-table-column>
 				<el-table-column label="操作" width="180" align="center">
 					<template slot-scope="scope">
@@ -35,9 +35,9 @@
 				</el-pagination>
 			</div>
 		</div>
-		
-		<el-dialog title="新增记录" :visible.sync="addVisible" width="60%">
-			<el-form ref="form" :model="form" label-width="50px">
+
+		<el-dialog title="新增记录" :visible.sync="addVisible" width="30%">
+			<el-form ref="form" :model="form" label-width="70px">
 				<el-form-item label="男方姓名" width="20%">
 					<el-input width="30%" v-model="form.mmname"></el-input>
 				</el-form-item>
@@ -45,10 +45,10 @@
 					<el-input width="30%" v-model="form.mfname"></el-input>
 				</el-form-item>
 				<el-form-item label="起始时间" width="20%">
-					<el-input width="30%" v-model="form.mstarttime"></el-input>
+					<el-date-picker type="date" placeholder="选择日期" v-model="form.mstarttime" style="width: 100%;"></el-date-picker>
 				</el-form-item>
 				<el-form-item label="终止时间" width="20%">
-					<el-input width="30%" v-model="form.mendtime"></el-input>
+					<el-date-picker type="date" placeholder="选择日期" v-model="form.mendtime" style="width: 100%;"></el-date-picker>
 				</el-form-item>
 				<el-form-item label="相亲状态">
 					<el-select v-model="form.datestatus" placeholder="请选择">
@@ -57,7 +57,7 @@
 						<el-option key="success" label="成功" value="success"></el-option>
 					</el-select>
 				</el-form-item>
-		
+
 			</el-form>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="addVisible = false">取 消</el-button>
@@ -66,59 +66,26 @@
 		</el-dialog>
 
 		<!-- 编辑弹出框 -->
-		<el-dialog title="编辑" :visible.sync="editVisible" width="60%">
-			<el-form ref="form" :model="form" label-width="50px">
-				<el-form-item label="姓名" width="40%">
-					<el-input width="30%" v-model="form.username"></el-input>
+		<el-dialog title="编辑" :visible.sync="editVisible" width="30%">
+			<el-form ref="form" :model="form" label-width="70px">
+				<el-form-item label="男方姓名" width="20%">
+					<el-input width="30%" v-model="form.mmname"></el-input>
 				</el-form-item>
-				<el-form-item label="居住地" width="40%">
-					<el-input width="30%" v-model="form.address"></el-input>
+				<el-form-item label="女方姓名" width="20%">
+					<el-input width="30%" v-model="form.mfname"></el-input>
 				</el-form-item>
-				<el-form-item label="性别">
-					<el-select v-model="form.usersex" placeholder="请选择">
-						<el-option key="male" label="男" value="male"></el-option>
-						<el-option key="female" label="女" value="female"></el-option>
+				<el-form-item label="起始时间" width="20%">
+					<el-date-picker type="date" placeholder="选择日期" v-model="form.mstarttime" style="width: 100%;"></el-date-picker>
+				</el-form-item>
+				<el-form-item label="终止时间" width="20%">
+					<el-date-picker type="date" placeholder="选择日期" v-model="form.mendtime" style="width: 100%;"></el-date-picker>
+				</el-form-item>
+				<el-form-item label="相亲状态">
+					<el-select v-model="form.datestatus" placeholder="请选择">
+						<el-option key="active" label="进行中" value="active"></el-option>
+						<el-option key="failed" label="失败" value="failed"></el-option>
+						<el-option key="success" label="成功" value="success"></el-option>
 					</el-select>
-				</el-form-item>
-				<el-form-item label="出生日期">
-					<el-col :span="11">
-						<el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-					</el-col>
-				</el-form-item>
-				<el-form-item label="出生地">
-					<el-input width="30%" v-model="form.birthlocation"></el-input>
-				</el-form-item>
-
-				<el-form-item label="职位">
-					<el-input width="30%" v-model="form.jobtitle"></el-input>
-				</el-form-item>
-				<el-form-item label="公司名称">
-					<el-input width="30%" v-model="form.worklocation"></el-input>
-				</el-form-item>
-				<el-form-item label="年薪">
-					<el-input width="30%" v-model="form.salary"></el-input>
-				</el-form-item>
-				<el-form-item label="房产数量">
-					<el-select v-model="form.housenumber" placeholder="请选择">
-						<el-option key="1" label="1" value="1"></el-option>
-						<el-option key="2" label="2" value="2"></el-option>
-						<el-option key="3" label="3" value="3"></el-option>
-						<el-option key="4" label="4" value="4"></el-option>
-						<el-option key="5" label="5" value="5"></el-option>
-						<el-option key="5+" label="多于5套" value="5+"></el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item label="个人爱好">
-					<el-input width="30%" v-model="form.hobby"></el-input>
-				</el-form-item>
-				<el-form-item width="30%" label="是否离异">
-					<el-switch v-model="form.divorce"></el-switch>
-				</el-form-item>
-				<el-form-item label="个性描述">
-					<el-input type="textarea" rows="5" v-model="form.charactor"></el-input>
-				</el-form-item>
-				<el-form-item label="相亲要求">
-					<el-input type="textarea" rows="5" v-model="form.requirement"></el-input>
 				</el-form-item>
 
 			</el-form>
@@ -155,7 +122,7 @@
 		padding-left: 60px;
 		width: 50%;
 	}
-	
+
 	.ai-search {
 		display: block;
 		margin-left: 1.125rem;
@@ -165,10 +132,10 @@
 
 <script>
 	export default {
-		name: 'queryuser',
+		name: 'datemanagement',
 		data() {
 			return {
-				url: './vuetable.json',
+				//url: './vuetable.json',
 				tableData: [],
 				cur_page: 1,
 				multipleSelection: [],
@@ -178,11 +145,13 @@
 				is_search: false,
 				editVisible: false,
 				delVisible: false,
-				addVisible:false,
+				addVisible: false,
 				form: {
-					username: '',
-					birthdate: '',
-					address: ''
+					mmname: '',
+					mfname: '',
+					mstarttime: '',
+					mendtime: '',
+					datestatus: ''
 				},
 				idx: -1
 			}
@@ -195,15 +164,15 @@
 				return this.tableData.filter((d) => {
 					let is_del = false;
 					for (let i = 0; i < this.del_list.length; i++) {
-						if (d.username === this.del_list[i].username) {
+						if (d.mmname === this.del_list[i].mmname) {
 							is_del = true;
 							break;
 						}
 					}
 					if (!is_del) {
-						if (d.username.indexOf(this.select_word) > -1 ||
-							d.address.indexOf(this.select_word) > -1 ||
-							d.birthdate.indexOf(this.select_word) > -1) {
+						if (d.mmname.indexOf(this.select_word) > -1 ||
+							d.mfname.indexOf(this.select_word) > -1 ||
+							d.datestatus.indexOf(this.select_word) > -1) {
 							return d;
 						}
 					}
@@ -221,12 +190,12 @@
 				// 开发环境使用 easy-mock 数据，正式环境使用 json 文件
 				if (process.env.NODE_ENV === 'development') {
 					// this.url = '/ms/query/list';
-					this.url = 'https://www.easy-mock.com/mock/5c6c0a072be418020f2f8198/example/ms/query/list';
+					this.url = 'https://www.easy-mock.com/mock/5c6c0a072be418020f2f8198/example/ms/query/date';
 				};
 				this.$axios.post(this.url, {
 					page: this.cur_page
 				}).then((res) => {
-					this.tableData = res.data.list;
+					this.tableData = res.data.date;
 				})
 			},
 			search() {
@@ -242,9 +211,11 @@
 				this.idx = index;
 				const item = this.tableData[index];
 				this.form = {
-					name: item.name,
-					date: item.date,
-					address: item.address
+					mmname: item.mmname,
+					mfname: item.mfname,
+					mstarttime: item.mstarttime,
+					mendtime: item.mendtime,
+					datestatus: item.datestatus
 				}
 				this.editVisible = true;
 			},

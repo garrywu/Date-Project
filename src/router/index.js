@@ -48,6 +48,7 @@ export default new Router({
 				                {
 				    // 富文本编辑器组件
 				    path: '/QueryResult',
+					name: 'QueryResult',
 				    component: resolve => require(['../components/page/QueryResult.vue'], resolve),
 				    meta: { title: 'AI匹配结果' }
 				},
