@@ -17,6 +17,10 @@
 				</el-table-column>
 				<el-table-column prop="mfname" label="女方姓名" width="120">
 				</el-table-column>
+				<el-table-column prop="mmmobile" label="男方手机" sortable width="150">
+				</el-table-column>
+				<el-table-column prop="mfmobile" label="女方手机" width="120">
+				</el-table-column>
 				<el-table-column prop="mstarttime" label="起始时间">
 				</el-table-column>
 				<el-table-column prop="mendtime" label="终止时间">
@@ -43,6 +47,12 @@
 				</el-form-item>
 				<el-form-item label="女方姓名" width="20%">
 					<el-input width="30%" v-model="form.mfname"></el-input>
+				</el-form-item>
+				<el-form-item label="男方手机" width="20%">
+					<el-input width="30%" v-model="form.mmmobile"></el-input>
+				</el-form-item>
+				<el-form-item label="女方手机" width="20%">
+					<el-input width="30%" v-model="form.mfmobile"></el-input>
 				</el-form-item>
 				<el-form-item label="起始时间" width="20%">
 					<el-date-picker type="date" placeholder="选择日期" v-model="form.mstarttime" style="width: 100%;"></el-date-picker>
@@ -73,6 +83,12 @@
 				</el-form-item>
 				<el-form-item label="女方姓名" width="20%">
 					<el-input width="30%" v-model="form.mfname"></el-input>
+				</el-form-item>
+				<el-form-item label="男方手机" width="20%">
+					<el-input width="30%" v-model="form.mmmobile"></el-input>
+				</el-form-item>
+				<el-form-item label="女方手机" width="20%">
+					<el-input width="30%" v-model="form.mfmobile"></el-input>
 				</el-form-item>
 				<el-form-item label="起始时间" width="20%">
 					<el-date-picker type="date" placeholder="选择日期" v-model="form.mstarttime" style="width: 100%;"></el-date-picker>
@@ -149,15 +165,24 @@
 				form: {
 					mmname: '',
 					mfname: '',
+					mmmobile:'',
+					mfmobile:'',
 					mstarttime: '',
 					mendtime: '',
 					datestatus: ''
 				},
-				idx: -1
+				idx: -1,
+				delmmname:'',
+				delmfname:'',
+				delmmmobile:'',
+				delmfmobile:''
 			}
 		},
 		created() {
 			this.getData();
+		},
+		mounted(){
+			this.aiAdd();
 		},
 		computed: {
 			data() {
@@ -211,11 +236,13 @@
 				this.idx = index;
 				const item = this.tableData[index];
 				this.form = {
-					mmname: item.mmname,
-					mfname: item.mfname,
-					mstarttime: item.mstarttime,
-					mendtime: item.mendtime,
-					datestatus: item.datestatus
+					mmname: row.mmname,
+					mfname: row.mfname,
+					mmmobile:row.mmmobile,
+					mfmobile:row.mfmobile,
+					mstarttime: row.mstarttime,
+					mendtime: row.mendtime,
+					datestatus: row.datestatus
 				}
 				this.editVisible = true;
 			},
@@ -225,17 +252,21 @@
 			handleDelete(index, row) {
 				this.idx = index;
 				this.delVisible = true;
+				delmmname = row.mmname;
+				delmfname = row.mfname;
+				delmmmobile = row.mmmobile;
+				delmfmobile = row.mfmobile;
 			},
-			delAll() {
-				const length = this.multipleSelection.length;
-				let str = '';
-				this.del_list = this.del_list.concat(this.multipleSelection);
-				for (let i = 0; i < length; i++) {
-					str += this.multipleSelection[i].name + ' ';
-				}
-				this.$message.error('删除了' + str);
-				this.multipleSelection = [];
-			},
+// 			delAll() {
+// 				const length = this.multipleSelection.length;
+// 				let str = '';
+// 				this.del_list = this.del_list.concat(this.multipleSelection);
+// 				for (let i = 0; i < length; i++) {
+// 					str += this.multipleSelection[i].name + ' ';
+// 				}
+// 				this.$message.error('删除了' + str);
+// 				this.multipleSelection = [];
+// 			},
 			handleSelectionChange(val) {
 				this.multipleSelection = val;
 			},
@@ -243,14 +274,50 @@
 			saveEdit() {
 				this.$set(this.tableData, this.idx, this.form);
 				this.editVisible = false;
+				axios.post('/user', {
+						mmname: form.mmname,
+						mfname: form.mfname,
+						mmmobile:form.mmmobile,
+						mfmobile:form.mfmobile,
+						mstarttime: form.mstarttime,
+						mendtime: form.mendtime,
+						datestatus: form.datestatus
+						
+					})
+					.then(function(response) {
+						console.log(response);
+					})
+					.catch(function(error) {
+						console.log(error);
+					});
 				this.$message.success(`修改第 ${this.idx+1} 行成功`);
 			},
 			// 确定删除
 			deleteRow() {
 				this.tableData.splice(this.idx, 1);
+				axios.post('/user', {
+						mmname: delmmname,
+						mfname: delmfname,
+						mmmobile:delmmmobile,
+						mfmobile:delmfmobile
+					})
+					.then(function(response) {
+						console.log(response);
+					})
+					.catch(function(error) {
+						console.log(error);
+					});
 				this.$message.success('删除成功');
 				this.delVisible = false;
-			}
+				
+			},
+			aiAdd() {
+				if(this.$route.params.mname){
+					this.addVisible = true;
+					this.form.mmname = this.$route.params.mname;
+					this.form.mfname = this.$route.params.fname;
+				}
+			},
 		}
 	}
 </script>

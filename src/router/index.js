@@ -36,6 +36,7 @@ export default new Router({
                 },
                 {
                     path: '/AddUser',
+					name: 'AddUser',
                     component: resolve => require(['../components/page/AddUser.vue'], resolve),
                     meta: { title: '新增用户' }
                 },
@@ -67,6 +68,7 @@ export default new Router({
 				                {
 				    // 相亲管理
 				    path: '/DateManagement',
+					name: 'DateManagement',
 				    component: resolve => require(['../components/page/DateManagement.vue'], resolve),
 				    meta: { title: '相亲管理' }
 				},

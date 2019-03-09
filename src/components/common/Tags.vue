@@ -58,9 +58,12 @@
             },
             // 设置标签
             setTags(route){
+				if(route.fullPath !='/DateManagement'){
                 const isExist = this.tagsList.some(item => {
                     return item.path === route.fullPath;
+					
                 })
+				
                 if(!isExist){
                     if(this.tagsList.length >= 8){
                         this.tagsList.shift();
@@ -72,6 +75,7 @@
                     })
                 }
                 bus.$emit('tags', this.tagsList);
+				}
             },
             handleTags(command){
                 command === 'other' ? this.closeOther() : this.closeAll();

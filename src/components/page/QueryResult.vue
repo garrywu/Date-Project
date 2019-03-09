@@ -10,56 +10,65 @@
 			<el-form-item v-model="form.username">
 			</el-form-item>
 			</el-form> -->
-			<p>当前匹配用户为: {{ username }}</p>
+			<p>当前匹配用户为: {{ tableData[0].username }}</p>
 			<br />
 			<div width='100%'>
 				<el-row :span="24">
 					<el-col :span="11">
-						<div class="wait-for-search" v-if="show">
-							<div style="width:50%;display: block;margin: 0rem auto; padding-top: 70px;">
-								<i class="el-icon-lx-peoplefill" style="font-size: 300px; color: white;"></i>
-								<el-button type="primary" icon="el-icon-edit" @click="jump" style="font-size: 30px;">选择用户进行匹配</el-button>
-							</div>
-						</div>
-					</el-col>
-
-					<el-col :span="11">
-						<div class="get-search" v-if="!show">
-							<el-form ref="form" label-position="left" inline class="demo-table-expand" :data="data">
-								<el-form-item label="姓名">
-									<span>{{ form.username }}</span>
-								</el-form-item>
-								<el-form-item label="出生日期">
-									<span>{{ form.birthdate }}</span>
-								</el-form-item>
-								<el-form-item label="工作地">
-									<span>{{ form.address }}</span>
-								</el-form-item>
-							</el-form>
+						<div class="get-search" >
+							<el-card class="box-card">
+								<div slot="header" class="clearfix">
+									<span>AI系统将为以下用户进行匹配</span>
+								</div>
+								<div>
+									<el-form label-position="left" inline class="demo-table-expand">
+										<el-form-item label="姓名">
+											<span>{{ tableData[0].username }}</span>
+										</el-form-item>
+										<el-form-item label="出生地">
+											<span>{{ tableData[0].birthlocation }}</span>
+										</el-form-item>
+										<el-form-item label="职位">
+											<span>{{ tableData[0].jobtitle }}</span>
+										</el-form-item>
+										<el-form-item label="联系方式">
+											<span>{{ tableData[0].mobile }}</span>
+										</el-form-item>
+										<el-form-item label="年薪">
+											<span>{{ tableData[0].salary }}</span>
+										</el-form-item>
+										<el-form-item label="房产数量">
+											<span>{{ tableData[0].housenumber }}</span>
+										</el-form-item>
+										<el-form-item label="个人爱好">
+											<span>{{ tableData[0].hobby }}</span>
+										</el-form-item>
+										<el-form-item label="是否离异">
+											<span>{{ tableData[0].divorce }}</span>
+										</el-form-item>
+										<el-form-item label="个性描述"> <span>{{ tableData[0].charactor }}</span>
+										</el-form-item>
+										<el-form-item label="相亲要求"> <span>{{ tableData[0].requirement }}</span>
+										</el-form-item>
+									</el-form>
+								</div>
+							</el-card>
 						</div>
 					</el-col>
 
 					<el-col :span="2">
 						<div style="width: 100%;">&nbsp;</div>
 					</el-col>
-					<el-col :span="11">
-						<div class="wait-for-result" v-if="show">
-							<div style="width:50%;display: block;margin: 0rem auto; padding-top: 70px;">
-								<i class="el-icon-lx-group" style="font-size: 300px; color: white;"></i>
-								<el-button type="success" icon="el-icon-lx-warn" style="font-size: 30px;">目前没有匹配结果</el-button>
-							</div>
-						</div>
-					</el-col>
 
 					<el-col :span="11">
-						<div class="get-result" v-if="!show">
+						<div class="get-result" >
 							<div class="block">
 								<el-carousel height="500px">
 									<el-carousel-item v-for="item in 4" :key="item">
 										<el-card class="box-card">
 											<div slot="header" class="clearfix">
 												<span>匹配度第{{ item }}名 AI加权分：{{ match }}%</span>
-												<el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+												<el-button style="float: right; padding: 3px 0" type="text" @click="arrangeDate(tableData[0].username,targetData[item].username)">安排相亲</el-button>
 											</div>
 											<div>
 												<el-form label-position="left" inline class="demo-table-expand">
@@ -138,7 +147,6 @@
 			}
 		},
 		created() {
-			this.aiSearch();
 			this.getData();
 			this.getTData()
 		},
@@ -168,13 +176,6 @@
 					path: '/QueryUser'
 				})
 			},
-			aiSearch() {
-				//alert("222");
-				//alert(this.$route.params.cal);
-				if (this.$route.params.cal == 'ais') {
-					this.show = false;
-				}
-			},
 			getData() {
 				// 开发环境使用 easy-mock 数据，正式环境使用 json 文件
 				if (process.env.NODE_ENV === 'development') {
@@ -198,6 +199,12 @@
 				}).then((res) => {
 					this.targetData = res.data.ai;
 					//alert(JSON.stringify(this.targetData[2]));
+				})
+			},
+			arrangeDate(mname,fname){
+				this.$router.push({
+					name: 'DateManagement',
+					params: { mname: mname, fname:fname}
 				})
 			}
 

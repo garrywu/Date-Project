@@ -7,13 +7,25 @@
 			</el-breadcrumb>
 		</div>
 		<div class="container">
+			<el-row>
+				<el-col :span="5">
+					&nbsp;
+				</el-col>
+				<el-col :span="14">
+					<el-steps :active="active">
+						<el-step title="步骤 1" description="填写新增用户信息"></el-step>
+						<el-step title="步骤 2" description="填写相亲对象要求"></el-step>
+					</el-steps>
+				</el-col>
+			</el-row>
+			<p>&nbsp;</p>
 			<div class="form-box">
-				<el-form ref="form" :model="form" label-width="80px">
+				<el-form ref="form" :model="form" label-width="80px" v-if="active==0">
 					<el-form-item label="用户名称">
 						<el-input v-model="form.username"></el-input>
 					</el-form-item>
 					<el-form-item label="性别">
-						<el-select v-model="form.usersex" placeholder="请选择">
+						<el-select v-model="form.gender" placeholder="请选择">
 							<el-option key="male" label="男" value="male"></el-option>
 							<el-option key="female" label="女" value="female"></el-option>
 						</el-select>
@@ -66,62 +78,170 @@
 					<el-form-item label="是否离异">
 						<el-switch v-model="form.divorce"></el-switch>
 					</el-form-item>
-					<el-form-item label="个性描述">
-						<el-input type="textarea" rows="5" v-model="form.charactor"></el-input>
+					<el-form-item label="是否有车">
+						<el-switch v-model="form.car"></el-switch>
 					</el-form-item>
+					<el-form-item label="子女数量">
+						<el-input-number v-model="form.child" controls-position="right" :min="0" :max="10"></el-input-number>
+					</el-form-item>
+					<el-form-item label="个性描述">
+						<div style="text-align: center">
+							<el-transfer style="text-align: left; display: inline-block" filterable :titles="['可选项', '选中项']" v-model="form.character"
+							 :data="form.data2" :button-texts="['撤销标签', '选中标签']" :format="{noChecked: '${total}',hasChecked: '${checked}/${total}'}"
+							 @change="handleChange">
+								<span slot-scope="{ option }">{{ option.key }} - {{ option.label }}</span>
+								<!-- <el-button class="transfer-footer"  slot="right-footer" size="small">清空选中项</el-button> -->
+							</el-transfer>
+						</div>
+					</el-form-item>
+					<el-form-item>
+						<el-button type="primary" @click="onNext">下一步</el-button>
+						<el-button @click="onClear">清空输入</el-button>
+					</el-form-item>
+				</el-form>
+				<el-form ref="form" :model="form" label-width="80px" v-if="active==2">
 					<el-form-item label="相亲要求">
 						<el-row>
-							<el-col :span="8">
-								<el-form-item label="接受离异">
-								<el-checkbox v-model="divorce"></el-checkbox>
-								</el-form-item>
+							<el-col :span="18">
+								<el-row>
+									<el-col :span="12">
+										<el-form-item label="接受离异">
+											<el-checkbox v-model="form.tdivorce"></el-checkbox>
+										</el-form-item>
+									</el-col>
+									<el-col :span="12">
+										<el-rate v-model="form.tdivorce_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
+										</el-rate>
+									</el-col>
+								</el-row>
 							</el-col>
-							<el-col :span="8">
-								<el-form-item label="接受有子">
-								<el-checkbox v-model="child"></el-checkbox>
-								</el-form-item>
+							<el-col :span="18">
+								<el-row>
+									<el-col :span="12">
+										<el-form-item label="接受有子">
+											<el-checkbox v-model="form.tchild"></el-checkbox>
+										</el-form-item>
+									</el-col>
+									<el-col :span="12">
+										<el-rate v-model="form.tchild_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
+										</el-rate>
+									</el-col>
+								</el-row>
 							</el-col>
-							<el-col :span="8">
-								<el-form-item label="接受外地">
-								<el-checkbox v-model="local"></el-checkbox>
-								</el-form-item>
+
+							<el-col :span="18">
+								<el-row>
+									<el-col :span="12">
+										<el-form-item label="接受外地">
+											<el-checkbox v-model="form.tlocal"></el-checkbox>
+										</el-form-item>
+									</el-col>
+									<el-col :span="12">
+										<el-rate v-model="form.tlocal_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
+										</el-rate>
+									</el-col>
+								</el-row>
+							</el-col>
+							<el-col :span="18">
+								<el-row>
+									<el-col :span="12">
+										<el-form-item label="是否有车">
+											<el-checkbox v-model="form.tcar"></el-checkbox>
+										</el-form-item>
+									</el-col>
+									<el-col :span="12">
+										<el-rate v-model="form.tcar_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
+										</el-rate>
+									</el-col>
+								</el-row>
 							</el-col>
 						</el-row>
 						<el-row>
-							<el-col :span="8">
-								<el-form-item label="房产数量">
-									<el-input v-model="targethouse"></el-input>
-								</el-form-item>
+							<el-col :span="18">
+								<el-row>
+									<el-col :span="8">
+										<el-form-item label="房产数量">
+											<el-input v-model="form.fthouse"></el-input>
+										</el-form-item>
+									</el-col>
+									<el-col :span="4">
+										<p>&nbsp;</p>
+									</el-col>
+									<el-col :span="12">
+										<el-rate v-model="form.thouse_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
+										</el-rate>
+									</el-col>
+								</el-row>
 							</el-col>
-							<el-col :span="8">
-								<el-form-item label="年薪要求">
-									<el-input v-model="targetsalary"></el-input>
-								</el-form-item>
+
+							<el-col :span="18">
+								<el-row>
+									<el-col :span="10">
+										<el-form-item label="年薪要求">
+											<el-input v-model="form.tsalary"></el-input>
+										</el-form-item>
+									</el-col>
+									<el-col :span="2">
+										<p>万</p>
+									</el-col>
+									<el-col :span="12">
+										<el-rate v-model="form.tsalary_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
+										</el-rate>
+									</el-col>
+								</el-row>
 							</el-col>
-							<el-col :span="8">
-								<el-form-item label="学历要求">
-									<el-input v-model="targeteducation"></el-input>
-								</el-form-item>
+
+							<el-col :span="18">
+								<el-row>
+									<el-col :span="10">
+										<el-form-item label="学历要求">
+											<el-input v-model="form.teducation"></el-input>
+										</el-form-item>
+									</el-col>
+									<el-col :span="2">
+										<p>&nbsp;</p>
+									</el-col>
+									<el-col :span="12">
+										<el-rate v-model="form.teducation_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
+										</el-rate>
+									</el-col>
+								</el-row>
 							</el-col>
+
+
 							<el-col :span="12">
-								<el-form-item label="年龄范围">
-									<span>最多小几岁</span>
-									<el-input v-model="targetbirthmin"></el-input>
-									<span>最多大几岁</span>
-									<el-input v-model="targetbirthmax"></el-input>
+								<el-form-item label="年龄要求">
+									<el-date-picker v-model="form.tbirthmin" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期"
+									 :default-time="['00:00:00', '23:59:59']">
+									</el-date-picker>
+									<el-rate v-model="form.tbirth_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+									 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
+									</el-rate>
 								</el-form-item>
 							</el-col>
 						</el-row>
 						<el-form-item label="特别需求">
-						<el-input type="textarea" rows="5" v-model="form.requirement"></el-input>
+							<el-input type="textarea" rows="5" v-model="form.requirement"></el-input>
+							<el-rate v-model="form.requirement_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+							 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
+							</el-rate>
 						</el-form-item>
 					</el-form-item>
 					<el-form-item>
 						<el-button type="primary" @click="onSubmit">添加用户</el-button>
-						<el-button>取消</el-button>
+						<el-button @click="onPre">返回上一步</el-button>
+						<el-button @click="onClear">清空输入</el-button>
 					</el-form-item>
 				</el-form>
 			</div>
+
 		</div>
 
 	</div>
@@ -131,10 +251,21 @@
 	export default {
 		name: 'newuser',
 		data: function() {
+			const generateData2 = _ => {
+				const data = [];
+				const characters = ['开朗', '腼腆', '幽默', '成熟', '事业心', '贤惠', '乖巧'];
+				characters.forEach((character, index) => {
+					data.push({
+						label: character,
+						key: index
+					});
+				});
+				return data;
+			};
 			return {
 				form: {
 					username: '',
-					usersex: '',
+					gender: '',
 					sexoption: [{
 						value: 'male',
 						label: '男'
@@ -143,7 +274,7 @@
 						label: '女'
 					}],
 					birthday: '',
-					education:'',
+					education: '',
 					mobile: '',
 					birthlocation: '',
 					address: '',
@@ -153,23 +284,103 @@
 					housenumber: '',
 					hobby: '',
 					divorce: '',
-					charactor: '',
-					child: '',
-					local: '',
-					child: '',
-					targethouse: '',
-					targetsalary: '',
-					targeteducation: '',
-					targetbirthmin: '',
-					targetbirthmax: '',
-					requirement: ''
-				}
+					child: 0,
+					car: '',
+					tdivorce: '',
+					tcar: '',
+					tlocal: '',
+					tchild: '',
+					thouse: '2',
+					tsalary: '',
+					teducation: '',
+					tbirthmin: '',
+					tbirthmax: '',
+					requirement: '',
+					requireVisible: false,
+					tdivorce_p: null,
+					tchild_p: null,
+					tlocal_p: null,
+					tcar_p: null,
+					thouse_p: null,
+					tsalary_p: null,
+					teducation_p: null,
+					tbirth_p: null,
+					requirement_p: null,
+					data2: generateData2(),
+					character: []
+				},
+				requireVisible: false,
+				active: 0,
+				defaultForm: '',
+
+
 			}
+		},
+		created() {
+			this.defaultForm = JSON.parse(JSON.stringify(this.form));
 		},
 		methods: {
 			onSubmit() {
-				this.$message.success('提交成功！');
+				this.$message.success('客户添加成功');
+				this.active = 0;
+				axios.post('/user', {
+						birthday: form.birthday,
+						education: form.education,
+						mobile: form.mobile,
+						birthlocation: form.birthlocation,
+						address: form.address,
+						jobtitle: form.jobtitle,
+						company: form.company,
+						salary: form.salary,
+						housenumber: form.housenumber,
+						hobby: form.hobby,
+						divorce: form.divorce,
+						child: form.child,
+						car: form.car,
+						tdivorce: form.tdivorce,
+						tcar: form.tcar,
+						tlocal: form.tlocal,
+						tchild: form.tchild,
+						thouse: form.thouse,
+						tsalary: form.tsalary,
+						teducation: form.teducation,
+						tbirthmin: form.tbirthmin,
+						tbirthmax: form.tbirthmax,
+						requirement: form.requirement,
+						tdivorce_p: form.tdivorce_p,
+						tchild_p: form.tchild_p,
+						tlocal_p: form.tlocal_p,
+						tcar_p: form.tcar_p,
+						thouse_p: form.thouse_p,
+						tsalary_p: form.tsalary_p,
+						teducation_p: form.teducation_p,
+						tbirth_p: form.tbirth_p,
+						requirement_p: form.requirement_p,
+						character: form.character
+					})
+					.then(function(response) {
+						console.log(response);
+					})
+					.catch(function(error) {
+						console.log(error);
+					});
+			},
+			onNext() {
+
+				this.active = this.active + 2;
+			},
+			onPre() {
+				this.active = this.active - 2;
+			},
+			onClear() {
+				this.form = JSON.parse(JSON.stringify(this.defaultForm));
 			}
 		}
 	}
 </script>
+
+<style scoped>
+	.userrate {
+		margin-top: 5px;
+	}
+</style>

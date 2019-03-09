@@ -71,10 +71,6 @@
 							    index: 'QueryUser',
 							    title: '查询用户'
 							},
-							{
-							    index: 'QueryResult',
-							    title: 'AI匹配结果'
-							},
                             {
                                 index: 'upload',
                                 title: '文件上传'

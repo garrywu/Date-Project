@@ -191,7 +191,9 @@
 					birthdate: '',
 					address: ''
 				},
-				idx: -1
+				idx: -1,
+				delname:'',
+				delmobile:''
 			}
 		},
 		created() {
@@ -258,6 +260,8 @@
 			handleDelete(index, row) {
 				this.idx = index;
 				this.delVisible = true;
+				this.delname = row.username;
+				this.delmobile = row.mobile;
 			},
 			delAll() {
 				const length = this.multipleSelection.length;
@@ -283,6 +287,16 @@
 				this.tableData.splice(this.idx, 1);
 				this.$message.success('删除成功');
 				this.delVisible = false;
+				axios.post('/user', {
+						username:this.delname,
+						mobile: this.delmobile
+					})
+					.then(function(response) {
+						console.log(response);
+					})
+					.catch(function(error) {
+						console.log(error);
+					});
 			},
 			aiSearch(){
 				this.$router.push({
