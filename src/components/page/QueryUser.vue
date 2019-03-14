@@ -18,30 +18,30 @@
 							<el-col :span="22">
 								<el-form label-position="left" inline class="demo-table-expand">
 									<el-form-item label="性别">
-										<span>{{ props.row.usersex }}</span>
+										<span>{{ props.row.gender }}</span>
 									</el-form-item>
 									<el-form-item label="出生地">
-										<span>{{ props.row.birthlocation }}</span>
+										<span>{{ props.row.birthPlace }}</span>
 									</el-form-item>
 									<el-form-item label="职位">
-										<span>{{ props.row.jobtitle }}</span>
+										<span>{{ props.row.profession }}</span>
 									</el-form-item>
 									<el-form-item label="联系方式">
-										<span>{{ props.row.mobile }}</span>
+										<span>{{ props.row.phoneNumber }}</span>
 									</el-form-item>
 									<el-form-item label="年薪">
 										<span>{{ props.row.salary }}</span>
 									</el-form-item>
 									<el-form-item label="房产数量">
-										<span>{{ props.row.housenumber }}</span>
+										<span>{{ props.row.houseNumber }}</span>
 									</el-form-item>
 									<el-form-item label="个人爱好">
 										<span>{{ props.row.hobby }}</span>
 									</el-form-item>
 									<el-form-item label="是否离异">
-										<span>{{ props.row.divorce }}</span>
+										<span>{{ props.row.isDivorce }}</span>
 									</el-form-item>
-									<el-form-item label="个性描述"> <span>{{ props.row.charactor }}</span>
+									<el-form-item label="个性描述"> <span>{{ props.row.personality }}</span>
 									</el-form-item>
 									<el-form-item label="相亲要求"> <span>{{ props.row.requirement }}</span>
 									</el-form-item>
@@ -54,9 +54,9 @@
 					</template>
 				</el-table-column>
 				<el-table-column type="selection" width="55" align="center"></el-table-column>
-				<el-table-column prop="birthdate" label="出生日期" sortable width="150">
+				<el-table-column prop="birthday" label="出生日期" sortable width="150">
 				</el-table-column>
-				<el-table-column prop="username" label="姓名" width="120">
+				<el-table-column prop="customerName" label="姓名" width="120">
 				</el-table-column>
 				<el-table-column prop="address" label="住址" :formatter="formatter">
 				</el-table-column>
@@ -77,13 +77,13 @@
 		<el-dialog title="编辑" :visible.sync="editVisible" width="40%">
 			<el-form ref="form" :model="form" label-width="70px">
 				<el-form-item label="姓名" width="40%">
-					<el-input width="30%" v-model="form.username"></el-input>
+					<el-input width="30%" v-model="form.customerName"></el-input>
 				</el-form-item>
 				<el-form-item label="居住地" width="40%">
 					<el-input width="30%" v-model="form.address"></el-input>
 				</el-form-item>
 				<el-form-item label="性别">
-					<el-select v-model="form.usersex" placeholder="请选择">
+					<el-select v-model="form.gender" placeholder="请选择">
 						<el-option key="male" label="男" value="male"></el-option>
 						<el-option key="female" label="女" value="female"></el-option>
 					</el-select>
@@ -94,20 +94,20 @@
 					</el-col>
 				</el-form-item>
 				<el-form-item label="出生地">
-					<el-input width="30%" v-model="form.birthlocation"></el-input>
+					<el-input width="30%" v-model="form.birthPlace"></el-input>
 				</el-form-item>
 
 				<el-form-item label="职位">
-					<el-input width="30%" v-model="form.jobtitle"></el-input>
+					<el-input width="30%" v-model="form.profession"></el-input>
 				</el-form-item>
 				<el-form-item label="公司名称">
-					<el-input width="30%" v-model="form.worklocation"></el-input>
+					<el-input width="30%" v-model="form.address"></el-input>
 				</el-form-item>
 				<el-form-item label="年薪">
 					<el-input width="30%" v-model="form.salary"></el-input>
 				</el-form-item>
 				<el-form-item label="房产数量">
-					<el-select v-model="form.housenumber" placeholder="请选择">
+					<el-select v-model="form.houseNumber" placeholder="请选择">
 						<el-option key="1" label="1" value="1"></el-option>
 						<el-option key="2" label="2" value="2"></el-option>
 						<el-option key="3" label="3" value="3"></el-option>
@@ -120,10 +120,10 @@
 					<el-input width="30%" v-model="form.hobby"></el-input>
 				</el-form-item>
 				<el-form-item width="30%" label="是否离异">
-					<el-switch v-model="form.divorce"></el-switch>
+					<el-switch v-model="form.isDivorce"></el-switch>
 				</el-form-item>
 				<el-form-item label="个性描述">
-					<el-input type="textarea" rows="5" v-model="form.charactor"></el-input>
+					<el-input type="textarea" rows="5" v-model="form.personality"></el-input>
 				</el-form-item>
 				<el-form-item label="相亲要求">
 					<el-input type="textarea" rows="5" v-model="form.requirement"></el-input>
@@ -187,8 +187,8 @@
 				editVisible: false,
 				delVisible: false,
 				form: {
-					username: '',
-					birthdate: '',
+					customerName: '',
+					birthday: '',
 					address: ''
 				},
 				idx: -1,
@@ -204,15 +204,15 @@
 				return this.tableData.filter((d) => {
 					let is_del = false;
 					for (let i = 0; i < this.del_list.length; i++) {
-						if (d.username === this.del_list[i].username) {
+						if (d.customerName === this.del_list[i].customerName) {
 							is_del = true;
 							break;
 						}
 					}
 					if (!is_del) {
-						if (d.username.indexOf(this.select_word) > -1 ||
+						if (d.customerName.indexOf(this.select_word) > -1 ||
 							d.address.indexOf(this.select_word) > -1 ||
-							d.birthdate.indexOf(this.select_word) > -1) {
+							d.birthday.indexOf(this.select_word) > -1) {
 							return d;
 						}
 					}

@@ -10,7 +10,7 @@
 			<el-form-item v-model="form.username">
 			</el-form-item>
 			</el-form> -->
-			<p>当前匹配用户为: {{ tableData[0].username }}</p>
+			<p>当前匹配用户为: {{ tableData[0].customerName }}</p>
 			<br />
 			<div width='100%'>
 				<el-row :span="24">
@@ -23,30 +23,30 @@
 								<div>
 									<el-form label-position="left" inline class="demo-table-expand">
 										<el-form-item label="姓名">
-											<span>{{ tableData[0].username }}</span>
+											<span>{{ tableData[0].customerName }}</span>
 										</el-form-item>
 										<el-form-item label="出生地">
-											<span>{{ tableData[0].birthlocation }}</span>
+											<span>{{ tableData[0].birthPlace }}</span>
 										</el-form-item>
 										<el-form-item label="职位">
-											<span>{{ tableData[0].jobtitle }}</span>
+											<span>{{ tableData[0].profession }}</span>
 										</el-form-item>
 										<el-form-item label="联系方式">
-											<span>{{ tableData[0].mobile }}</span>
+											<span>{{ tableData[0].phoneNumber }}</span>
 										</el-form-item>
 										<el-form-item label="年薪">
 											<span>{{ tableData[0].salary }}</span>
 										</el-form-item>
 										<el-form-item label="房产数量">
-											<span>{{ tableData[0].housenumber }}</span>
+											<span>{{ tableData[0].houseNumber }}</span>
 										</el-form-item>
 										<el-form-item label="个人爱好">
 											<span>{{ tableData[0].hobby }}</span>
 										</el-form-item>
 										<el-form-item label="是否离异">
-											<span>{{ tableData[0].divorce }}</span>
+											<span>{{ tableData[0].isDivorce }}</span>
 										</el-form-item>
-										<el-form-item label="个性描述"> <span>{{ tableData[0].charactor }}</span>
+										<el-form-item label="个性描述"> <span>{{ tableData[0].personality }}</span>
 										</el-form-item>
 										<el-form-item label="相亲要求"> <span>{{ tableData[0].requirement }}</span>
 										</el-form-item>
@@ -68,35 +68,35 @@
 										<el-card class="box-card">
 											<div slot="header" class="clearfix">
 												<span>匹配度第{{ item }}名 AI加权分：{{ match }}%</span>
-												<el-button style="float: right; padding: 3px 0" type="text" @click="arrangeDate(tableData[0].username,targetData[item].username)">安排相亲</el-button>
+												<el-button style="float: right; padding: 3px 0" type="text" @click="arrangeDate(tableData[0].customerName,targetData[item].customerName)">安排相亲</el-button>
 											</div>
 											<div>
 												<el-form label-position="left" inline class="demo-table-expand">
 													<el-form-item label="姓名">
-														<span>{{ targetData[item].username }}</span>
+														<span>{{ targetData[item].customerName }}</span>
 													</el-form-item>
 													<el-form-item label="出生地">
-														<span>{{ targetData[item].birthlocation }}</span>
+														<span>{{ targetData[item].birthPlace }}</span>
 													</el-form-item>
 													<el-form-item label="职位">
-														<span>{{ targetData[item].jobtitle }}</span>
+														<span>{{ targetData[item].profession }}</span>
 													</el-form-item>
 													<el-form-item label="联系方式">
-														<span>{{ targetData[item].mobile }}</span>
+														<span>{{ targetData[item].phoneNumber }}</span>
 													</el-form-item>
 													<el-form-item label="年薪">
 														<span>{{ targetData[item].salary }}</span>
 													</el-form-item>
 													<el-form-item label="房产数量">
-														<span>{{ targetData[item].housenumber }}</span>
+														<span>{{ targetData[item].houseNumber }}</span>
 													</el-form-item>
 													<el-form-item label="个人爱好">
 														<span>{{ targetData[item].hobby }}</span>
 													</el-form-item>
 													<el-form-item label="是否离异">
-														<span>{{ targetData[item].divorce }}</span>
+														<span>{{ targetData[item].isDivorce }}</span>
 													</el-form-item>
-													<el-form-item label="个性描述"> <span>{{ targetData[item].charactor }}</span>
+													<el-form-item label="个性描述"> <span>{{ targetData[item].personality }}</span>
 													</el-form-item>
 													<el-form-item label="相亲要求"> <span>{{ targetData[item].requirement }}</span>
 													</el-form-item>
@@ -133,8 +133,8 @@
 					ghostClass: 'ghost-style'
 				},
 				form: {
-					username: '李易峰',
-					birthdate: '1993-01-01',
+					customerName: '李易峰',
+					birthday: '1993-01-01',
 					address: '文汇路111号'
 				},
 				del_list: [],
@@ -150,26 +150,26 @@
 			this.getData();
 			this.getTData()
 		},
-		// 		computed: {
-		// 			data() {
-		// 				return this.tableData.filter((d) => {
-		// 					let is_del = false;
-		// 					for (let i = 0; i < this.del_list.length; i++) {
-		// 						if (d.username === this.del_list[i].username) {
-		// 							is_del = true;
-		// 							break;
-		// 						}
-		// 					}
-		// 					if (!is_del) {
-		// 						if (d.username.indexOf(this.select_word) > -1 ||
-		// 							d.address.indexOf(this.select_word) > -1 ||
-		// 							d.birthdate.indexOf(this.select_word) > -1) {
-		// 							return d;
-		// 						}
-		// 					}
-		// 				})
-		// 			}
-		// 		},
+// 				computed: {
+// 					data() {
+// 						return this.tableData.filter((d) => {
+// 							let is_del = false;
+// 							for (let i = 0; i < this.del_list.length; i++) {
+// 								if (d.customerName === this.del_list[i].customerName) {
+// 									is_del = true;
+// 									break;
+// 								}
+// 							}
+// 							if (!is_del) {
+// 								if (d.customerName.indexOf(this.select_word) > -1 ||
+// 									d.address.indexOf(this.select_word) > -1 ||
+// 									d.birthday.indexOf(this.select_word) > -1) {
+// 									return d;
+// 								}
+// 							}
+// 						})
+// 					}
+// 				},
 		methods: {
 			jump() {
 				this.$router.push({

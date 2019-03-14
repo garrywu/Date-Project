@@ -22,7 +22,7 @@
 			<div class="form-box">
 				<el-form ref="form" :model="form" label-width="80px" v-if="active==0">
 					<el-form-item label="用户名称">
-						<el-input v-model="form.username"></el-input>
+						<el-input v-model="form.customerName"></el-input>
 					</el-form-item>
 					<el-form-item label="性别">
 						<el-select v-model="form.gender" placeholder="请选择">
@@ -36,13 +36,13 @@
 						</el-col>
 					</el-form-item>
 					<el-form-item label="出生地">
-						<el-input v-model="form.birthlocation"></el-input>
+						<el-input v-model="form.birthPlace"></el-input>
 					</el-form-item>
 					<el-form-item label="居住地">
 						<el-input v-model="form.address"></el-input>
 					</el-form-item>
 					<el-form-item label="联系方式">
-						<el-input v-model="form.mobile"></el-input>
+						<el-input v-model="form.phoneNumber"></el-input>
 					</el-form-item>
 					<el-form-item label="最高学历">
 						<el-select v-model="form.education" placeholder="请选择">
@@ -54,7 +54,7 @@
 						</el-select>
 					</el-form-item>
 					<el-form-item label="职位">
-						<el-input v-model="form.jobtitle"></el-input>
+						<el-input v-model="form.profession"></el-input>
 					</el-form-item>
 					<el-form-item label="公司名称">
 						<el-input v-model="form.company"></el-input>
@@ -63,7 +63,7 @@
 						<el-input v-model="form.salary"></el-input>
 					</el-form-item>
 					<el-form-item label="房产数量">
-						<el-select v-model="form.housenumber" placeholder="请选择">
+						<el-select v-model="form.houseNumber" placeholder="请选择">
 							<el-option key="1" label="1" value="1"></el-option>
 							<el-option key="2" label="2" value="2"></el-option>
 							<el-option key="3" label="3" value="3"></el-option>
@@ -76,17 +76,17 @@
 						<el-input v-model="form.hobby"></el-input>
 					</el-form-item>
 					<el-form-item label="是否离异">
-						<el-switch v-model="form.divorce"></el-switch>
+						<el-switch v-model="form.isDivorce"></el-switch>
 					</el-form-item>
 					<el-form-item label="是否有车">
-						<el-switch v-model="form.car"></el-switch>
+						<el-switch v-model="form.haveCar"></el-switch>
 					</el-form-item>
 					<el-form-item label="子女数量">
-						<el-input-number v-model="form.child" controls-position="right" :min="0" :max="10"></el-input-number>
+						<el-input-number v-model="form.childNumber" controls-position="right" :min="0" :max="10"></el-input-number>
 					</el-form-item>
 					<el-form-item label="个性描述">
 						<div style="text-align: center">
-							<el-transfer style="text-align: left; display: inline-block" filterable :titles="['可选项', '选中项']" v-model="form.character"
+							<el-transfer style="text-align: left; display: inline-block" filterable :titles="['可选项', '选中项']" v-model="form.personality"
 							 :data="form.data2" :button-texts="['撤销标签', '选中标签']" :format="{noChecked: '${total}',hasChecked: '${checked}/${total}'}"
 							 @change="handleChange">
 								<span slot-scope="{ option }">{{ option.key }} - {{ option.label }}</span>
@@ -106,11 +106,11 @@
 								<el-row>
 									<el-col :span="12">
 										<el-form-item label="接受离异">
-											<el-checkbox v-model="form.tdivorce"></el-checkbox>
+											<el-checkbox v-model="form.divorceReq"></el-checkbox>
 										</el-form-item>
 									</el-col>
 									<el-col :span="12">
-										<el-rate v-model="form.tdivorce_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										<el-rate v-model="form.divorceWeg" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
 										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
 										</el-rate>
 									</el-col>
@@ -120,11 +120,11 @@
 								<el-row>
 									<el-col :span="12">
 										<el-form-item label="接受有子">
-											<el-checkbox v-model="form.tchild"></el-checkbox>
+											<el-checkbox v-model="form.childReq"></el-checkbox>
 										</el-form-item>
 									</el-col>
 									<el-col :span="12">
-										<el-rate v-model="form.tchild_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										<el-rate v-model="form.childWeg" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
 										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
 										</el-rate>
 									</el-col>
@@ -135,11 +135,11 @@
 								<el-row>
 									<el-col :span="12">
 										<el-form-item label="接受外地">
-											<el-checkbox v-model="form.tlocal"></el-checkbox>
+											<el-checkbox v-model="form.localReq"></el-checkbox>
 										</el-form-item>
 									</el-col>
 									<el-col :span="12">
-										<el-rate v-model="form.tlocal_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										<el-rate v-model="form.localWeg" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
 										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
 										</el-rate>
 									</el-col>
@@ -149,11 +149,11 @@
 								<el-row>
 									<el-col :span="12">
 										<el-form-item label="是否有车">
-											<el-checkbox v-model="form.tcar"></el-checkbox>
+											<el-checkbox v-model="form.carReq"></el-checkbox>
 										</el-form-item>
 									</el-col>
 									<el-col :span="12">
-										<el-rate v-model="form.tcar_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										<el-rate v-model="form.carWeg" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
 										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
 										</el-rate>
 									</el-col>
@@ -165,14 +165,14 @@
 								<el-row>
 									<el-col :span="8">
 										<el-form-item label="房产数量">
-											<el-input v-model="form.fthouse"></el-input>
+											<el-input v-model="form.houseReq"></el-input>
 										</el-form-item>
 									</el-col>
 									<el-col :span="4">
 										<p>&nbsp;</p>
 									</el-col>
 									<el-col :span="12">
-										<el-rate v-model="form.thouse_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										<el-rate v-model="form.houseWeg" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
 										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
 										</el-rate>
 									</el-col>
@@ -183,14 +183,14 @@
 								<el-row>
 									<el-col :span="10">
 										<el-form-item label="年薪要求">
-											<el-input v-model="form.tsalary"></el-input>
+											<el-input v-model="form.salaryReq"></el-input>
 										</el-form-item>
 									</el-col>
 									<el-col :span="2">
 										<p>万</p>
 									</el-col>
 									<el-col :span="12">
-										<el-rate v-model="form.tsalary_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										<el-rate v-model="form.salaryWeg" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
 										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
 										</el-rate>
 									</el-col>
@@ -201,14 +201,14 @@
 								<el-row>
 									<el-col :span="10">
 										<el-form-item label="学历要求">
-											<el-input v-model="form.teducation"></el-input>
+											<el-input v-model="form.educationReq"></el-input>
 										</el-form-item>
 									</el-col>
 									<el-col :span="2">
 										<p>&nbsp;</p>
 									</el-col>
 									<el-col :span="12">
-										<el-rate v-model="form.teducation_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										<el-rate v-model="form.educationWeg" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
 										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
 										</el-rate>
 									</el-col>
@@ -218,10 +218,10 @@
 
 							<el-col :span="12">
 								<el-form-item label="年龄要求">
-									<el-date-picker v-model="form.tbirthmin" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期"
+									<el-date-picker v-model="form.maxAgeReq" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期"
 									 :default-time="['00:00:00', '23:59:59']">
 									</el-date-picker>
-									<el-rate v-model="form.tbirth_p" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+									<el-rate v-model="form.ageWeg" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
 									 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
 									</el-rate>
 								</el-form-item>
@@ -264,7 +264,7 @@
 			};
 			return {
 				form: {
-					username: '',
+					customerName: '',
 					gender: '',
 					sexoption: [{
 						value: 'male',
@@ -273,41 +273,43 @@
 						value: 'female',
 						label: '女'
 					}],
+					age: '',
 					birthday: '',
 					education: '',
-					mobile: '',
-					birthlocation: '',
+					birthPlace: '',
 					address: '',
-					jobtitle: '',
+					profession: '',
 					company: '',
 					salary: '',
-					housenumber: '',
+					houseNumber: '',
 					hobby: '',
-					divorce: '',
-					child: 0,
-					car: '',
-					tdivorce: '',
-					tcar: '',
-					tlocal: '',
-					tchild: '',
-					thouse: '2',
-					tsalary: '',
-					teducation: '',
-					tbirthmin: '',
-					tbirthmax: '',
+					isDivorce: '',
+					childNumber: 0,
+					haveCar: '',
+					divorceReq: '',
+					carReq: '',
+					localReq: '',
+					childReq: '',
+					houseReq: '2',
+					salaryReq: '',
+					educationReq: '',
+					professionReq:'',
+					professionWeg:'',
+					minAgeReq: '',
+					maxAgeReq: '',
 					requirement: '',
 					requireVisible: false,
-					tdivorce_p: null,
-					tchild_p: null,
-					tlocal_p: null,
-					tcar_p: null,
-					thouse_p: null,
-					tsalary_p: null,
-					teducation_p: null,
-					tbirth_p: null,
+					divorceWeg: null,
+					childWeg: null,
+					localWeg: null,
+					carWeg: null,
+					houseWeg: null,
+					salaryWeg: null,
+					educationWeg: null,
+					ageWeg: null,
 					requirement_p: null,
 					data2: generateData2(),
-					character: []
+					personality: []
 				},
 				requireVisible: false,
 				active: 0,
