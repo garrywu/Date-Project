@@ -3,11 +3,11 @@ module.exports = {
     productionSourceMap: false,
     devServer: {
         proxy: {
-            '/api':{
-                target:'http://jsonplaceholder.typicode.com',
+            '/love':{
+                target:'http://127.0.0.1:8090/love',
                 changeOrigin:true,
                 pathRewrite:{
-                    '/api':''
+                    '/love':''
                 }
             },
             '/ms':{

@@ -46,7 +46,14 @@ export default new Router({
                     component: resolve => require(['../components/page/QueryUser.vue'], resolve),
                     meta: { title: '查询用户' }
                 },
-				                {
+				{
+				    // 修改用户
+				    path: '/ModifyUser',
+					name: 'ModifyUser',
+				    component: resolve => require(['../components/page/ModifyUser.vue'], resolve),
+				    meta: { title: '修改用户' }
+				},
+				{
 				    // 富文本编辑器组件
 				    path: '/QueryResult',
 					name: 'QueryResult',

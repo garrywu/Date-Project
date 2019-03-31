@@ -43,7 +43,7 @@
 									</el-form-item>
 									<el-form-item label="个性描述"> <span>{{ props.row.personality }}</span>
 									</el-form-item>
-									<el-form-item label="相亲要求"> <span>{{ props.row.requirement }}</span>
+									<el-form-item > <i class="el-icon-info" ><span @click="getReq" style="cursor:pointer;">&nbsp;点击查看他的要求</span></i>
 									</el-form-item>
 								</el-form>
 							</el-col>
@@ -75,64 +75,10 @@
 
 		<!-- 编辑弹出框 -->
 		<el-dialog title="编辑" :visible.sync="editVisible" width="40%">
-			<el-form ref="form" :model="form" label-width="70px">
-				<el-form-item label="姓名" width="40%">
-					<el-input width="30%" v-model="form.customerName"></el-input>
-				</el-form-item>
-				<el-form-item label="居住地" width="40%">
-					<el-input width="30%" v-model="form.address"></el-input>
-				</el-form-item>
-				<el-form-item label="性别">
-					<el-select v-model="form.gender" placeholder="请选择">
-						<el-option key="male" label="男" value="male"></el-option>
-						<el-option key="female" label="女" value="female"></el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item label="出生日期">
-					<el-col :span="11">
-						<el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-					</el-col>
-				</el-form-item>
-				<el-form-item label="出生地">
-					<el-input width="30%" v-model="form.birthPlace"></el-input>
-				</el-form-item>
-
-				<el-form-item label="职位">
-					<el-input width="30%" v-model="form.profession"></el-input>
-				</el-form-item>
-				<el-form-item label="公司名称">
-					<el-input width="30%" v-model="form.address"></el-input>
-				</el-form-item>
-				<el-form-item label="年薪">
-					<el-input width="30%" v-model="form.salary"></el-input>
-				</el-form-item>
-				<el-form-item label="房产数量">
-					<el-select v-model="form.houseNumber" placeholder="请选择">
-						<el-option key="1" label="1" value="1"></el-option>
-						<el-option key="2" label="2" value="2"></el-option>
-						<el-option key="3" label="3" value="3"></el-option>
-						<el-option key="4" label="4" value="4"></el-option>
-						<el-option key="5" label="5" value="5"></el-option>
-						<el-option key="5+" label="多于5套" value="5+"></el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item label="个人爱好">
-					<el-input width="30%" v-model="form.hobby"></el-input>
-				</el-form-item>
-				<el-form-item width="30%" label="是否离异">
-					<el-switch v-model="form.isDivorce"></el-switch>
-				</el-form-item>
-				<el-form-item label="个性描述">
-					<el-input type="textarea" rows="5" v-model="form.personality"></el-input>
-				</el-form-item>
-				<el-form-item label="相亲要求">
-					<el-input type="textarea" rows="5" v-model="form.requirement"></el-input>
-				</el-form-item>
-
-			</el-form>
+			<div class="del-dialog-cnt">是否确定对目标用户信息进行修改</div>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="editVisible = false">取 消</el-button>
-				<el-button type="primary" @click="saveEdit">确 定</el-button>
+				<el-button type="primary" @click="beginEdit">确 定</el-button>
 			</span>
 		</el-dialog>
 
@@ -228,15 +174,27 @@
 			// 获取 easy-mock 的模拟数据
 			getData() {
 				// 开发环境使用 easy-mock 数据，正式环境使用 json 文件
-				if (process.env.NODE_ENV === 'development') {
+				/* if (process.env.NODE_ENV === 'development') {
 					// this.url = '/ms/query/list';
 					this.url = 'https://www.easy-mock.com/mock/5c6c0a072be418020f2f8198/example/ms/query/list';
-				};
+				}; */
+				this.url='love/api/findCustomerAll'
 				this.$axios.post(this.url, {
 					page: this.cur_page
 				}).then((res) => {
-					this.tableData = res.data.list;
+					console.log(res);
+					if(res.data.success){
+						console.log(res.data.data);
+						this.tableData = res.data.data;
+						//alert(JSON.stringify(this.tableData));
+					}else{
+						//出错处理 你可以自己选择方式
+						alert(res.data.erroMessage);
+					}
 				})
+			},
+			getReq(){
+				alert("hhh");
 			},
 			search() {
 				this.is_search = true;
@@ -277,10 +235,13 @@
 				this.multipleSelection = val;
 			},
 			// 保存编辑
-			saveEdit() {
-				this.$set(this.tableData, this.idx, this.form);
+			beginEdit() {
+				//alert(this.tableData[this.idx].customerId);
 				this.editVisible = false;
-				this.$message.success(`修改第 ${this.idx+1} 行成功`);
+				this.$router.push({
+					name: 'ModifyUser',
+					params: { customerId: this.tableData[this.idx].customerId }
+				})
 			},
 			// 确定删除
 			deleteRow() {
