@@ -36,10 +36,12 @@
 						</el-col>
 					</el-form-item>
 					<el-form-item label="出生地">
-						<el-input v-model="form.birthPlace"></el-input>
+						<el-cascader :options="form.birthoptions" v-model="form.birthPlace" @change="handlebirthChange">
+						</el-cascader>
 					</el-form-item>
 					<el-form-item label="居住地">
-						<el-input v-model="form.address"></el-input>
+						<el-cascader :options="form.addressoptions" v-model="form.address" @change="handleaddressChange">
+						</el-cascader>
 					</el-form-item>
 					<el-form-item label="联系方式">
 						<el-input v-model="form.phoneNumber"></el-input>
@@ -76,10 +78,16 @@
 						<el-input v-model="form.hobby"></el-input>
 					</el-form-item>
 					<el-form-item label="是否离异">
-						<el-switch v-model="form.isDivorce"></el-switch>
+						<el-select v-model="form.isDivorce" placeholder="请选择">
+							<el-option key="0" label="是" value="0"></el-option>
+							<el-option key="1" label="否" value="1"></el-option>
+						</el-select>
 					</el-form-item>
 					<el-form-item label="是否有车">
-						<el-switch v-model="form.haveCar"></el-switch>
+						<el-select v-model="form.haveCar" placeholder="请选择">
+							<el-option key="0" label="是" value="0"></el-option>
+							<el-option key="1" label="否" value="1"></el-option>
+						</el-select>
 					</el-form-item>
 					<el-form-item label="子女数量">
 						<el-input-number v-model="form.childNumber" controls-position="right" :min="0" :max="10"></el-input-number>
@@ -248,6 +256,11 @@
 </template>
 
 <script>
+	import {
+		regionData,
+		CodeToText,
+		TextToCode
+	} from 'element-china-area-data';
 	export default {
 		name: 'newuser',
 		data: function() {
@@ -309,7 +322,11 @@
 					ageWeg: null,
 					requirement_p: null,
 					data2: generateData2(),
-					personality: []
+					personality: [],
+					birthoptions: regionData,
+					birthPlace: ['310000','310100','310109'],
+					addressoptions: regionData,
+					address: ['310000','310100','310109']
 				},
 				requireVisible: false,
 				active: 0,
@@ -376,6 +393,12 @@
 			},
 			onClear() {
 				this.form = JSON.parse(JSON.stringify(this.defaultForm));
+			},
+			handlebirthChange(value) {
+				console.log(value);
+			},
+			handleaddressChange(value) {
+				console.log(value);
 			}
 		}
 	}
