@@ -32,8 +32,11 @@
 					</el-form-item>
 					<el-form-item label="出生日期">
 						<el-col :span="11">
-							<el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+							<el-date-picker type="date" placeholder="选择日期" v-model="form.birthday" style="width: 100%;"></el-date-picker>
 						</el-col>
+					</el-form-item>
+					<el-form-item label="年龄">
+						<el-input v-model="form.age"></el-input>
 					</el-form-item>
 					<el-form-item label="出生地">
 						<el-input v-model="form.birthPlace"></el-input>
@@ -76,10 +79,10 @@
 						<el-input v-model="form.hobby"></el-input>
 					</el-form-item>
 					<el-form-item label="是否离异">
-						<el-switch v-model="form.isDivorce"></el-switch>
+						<el-input v-model="form.isDivorce"></el-input>
 					</el-form-item>
 					<el-form-item label="是否有车">
-						<el-switch v-model="form.haveCar"></el-switch>
+						<el-input v-model="form.haveCar"></el-input>
 					</el-form-item>
 					<el-form-item label="子女数量">
 						<el-input-number v-model="form.childNumber" controls-position="right" :min="0" :max="10"></el-input-number>
@@ -215,10 +218,27 @@
 								</el-row>
 							</el-col>
 
+<el-col :span="18">
+        <el-row>
+         <el-col :span="10">
+          <el-form-item label="职业要求">
+           <el-input v-model="form.professionReq"></el-input>
+          </el-form-item>
+         </el-col>
+         <el-col :span="2">
+          <p>&nbsp;</p >
+         </el-col>
+         <el-col :span="12">
+          <el-rate v-model="form.professionWeg" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+           :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
+          </el-rate>
+         </el-col>
+        </el-row>
+       </el-col>
 
 							<el-col :span="12">
 								<el-form-item label="年龄要求">
-									<el-date-picker v-model="form.maxAgeReq" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期"
+									<el-date-picker v-model="form.tbirth" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期"
 									 :default-time="['00:00:00', '23:59:59']">
 									</el-date-picker>
 									<el-rate v-model="form.ageWeg" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
@@ -277,6 +297,7 @@
 					birthday: '',
 					education: '',
 					birthPlace: '',
+					phoneNumber: '',
 					address: '',
 					profession: '',
 					company: '',
@@ -309,7 +330,10 @@
 					ageWeg: null,
 					requirement_p: null,
 					data2: generateData2(),
-					personality: []
+					personality: [],
+					professionReq:null,
+     				professionWeg:null,
+     				tbirht:null
 				},
 				requireVisible: false,
 				active: 0,
@@ -323,49 +347,99 @@
 		},
 		methods: {
 			onSubmit() {
-				this.$message.success('客户添加成功');
+				//this.$message.success('客户添加成功');
 				this.active = 0;
-				axios.post('/user', {
-						birthday: form.birthday,
-						education: form.education,
-						mobile: form.mobile,
-						birthlocation: form.birthlocation,
-						address: form.address,
-						jobtitle: form.jobtitle,
-						company: form.company,
-						salary: form.salary,
-						housenumber: form.housenumber,
-						hobby: form.hobby,
-						divorce: form.divorce,
-						child: form.child,
-						car: form.car,
-						tdivorce: form.tdivorce,
-						tcar: form.tcar,
-						tlocal: form.tlocal,
-						tchild: form.tchild,
-						thouse: form.thouse,
-						tsalary: form.tsalary,
-						teducation: form.teducation,
-						tbirthmin: form.tbirthmin,
-						tbirthmax: form.tbirthmax,
-						requirement: form.requirement,
-						tdivorce_p: form.tdivorce_p,
-						tchild_p: form.tchild_p,
-						tlocal_p: form.tlocal_p,
-						tcar_p: form.tcar_p,
-						thouse_p: form.thouse_p,
-						tsalary_p: form.tsalary_p,
-						teducation_p: form.teducation_p,
-						tbirth_p: form.tbirth_p,
-						requirement_p: form.requirement_p,
-						character: form.character
+var formData = new FormData();
+				formData.append('age', this.form.age);
+				formData.append('customerName', this.form.customerName);
+				formData.append('gender', this.form.gender);
+				formData.append('birthday', this.form.birthday);
+				formData.append('education', this.form.education);
+				formData.append('phoneNumber', this.form.phoneNumber);
+				formData.append('birthPlace', this.form.birthPlace);
+				formData.append('address', this.form.address);
+				formData.append('profession', this.form.profession);
+				formData.append('company', this.form.company);
+				formData.append('salary', this.form.salary);
+				formData.append('houseNumber', this.form.houseNumber);
+				formData.append('hobby', this.form.hobby);
+				formData.append('isDivorce', this.form.isDivorce);
+				formData.append('childNumber', this.form.childNumber);
+				formData.append('haveCar', this.form.haveCar);
+				formData.append('divorceReq', this.form.divorceReq);
+				formData.append('carReq', this.form.carReq);
+				formData.append('localReq', this.form.localReq);
+				formData.append('childReq', this.form.childReq);
+				formData.append('houseReq', this.form.houseReq);
+				formData.append('salaryReq', this.form.salaryReq);
+				formData.append('educationReq', this.form.educationReq);
+				formData.append('minAgeReq', this.form.tbirth[0]);
+				formData.append('maxAgeReq', this.form.tbirth[1]);
+				formData.append('requirement', this.form.requirement);
+				formData.append('divorceWeg', this.form.divorceWeg);
+				formData.append('childWeg', this.form.childWeg);
+				formData.append('localWeg', this.form.localWeg);
+				formData.append('carWeg', this.form.carWeg);
+				formData.append('houseWeg', this.form.houseWeg);
+				formData.append('salaryWeg', this.form.salaryWeg);
+				formData.append('educationWeg', this.form.educationWeg);
+				formData.append('ageWeg', this.form.ageWeg);
+				formData.append('requirement_p', this.form.requirement_p);
+				formData.append('personality', this.form.personality.toString());
+				formData.append('professionReq', this.form.professionReq);
+				formData.append('professionWeg', this.form.professionWeg);
+				this.$axios.post("love/api/addCustomer", formData)
+					.then((res) => {
+						return res
 					})
-					.then(function(response) {
-						console.log(response);
-					})
-					.catch(function(error) {
-						console.log(error);
+					.catch((err) => {
+						return err
 					});
+//				this.$axios.post('love/api/addCustomer', {
+//					    age:this.form.age,
+//					    gender:this.form.gender,
+//						birthday: this.form.birthday,
+//						education: this.form.education,
+//						phoneNumber:this.form.phoneNumber,
+//						birthPlace: this.form.birthPlace,
+//						address: this.form.address,
+//						profession: this.form.profession,
+//						company: this.form.company,
+//						salary: this.form.salary,
+//						houseNumber: this.form.houseNumber,
+//						hobby: this.form.hobby,
+//						isDivorce: this.form.isDivorce,
+//						childNumber: this.form.childNumber,
+//						haveCar: this.form.haveCar,
+//						divorceReq: this.form.divorceReq,
+//						carReq: this.form.carReq,
+//						localReq: this.form.localReq,
+//						childReq: this.form.childReq,
+//						houseReq: this.form.houseReq,
+//						salaryReq: this.form.salaryReq,
+//						educationReq: this.form.educationReq,
+//						minAgeReq: this.form.tbirth[0],
+//						maxAgeReq: this.form.tbirth[1],
+//						requirement: this.form.requirement,
+//						divorceWeg: this.form.divorceWeg,
+//						childWeg: this.form.childWeg,
+//						localWeg: this.form.localWeg,
+//						carWeg: this.form.carWeg,
+//						houseWeg: this.form.houseWeg,
+//						salaryWeg: this.form.salaryWeg,
+//						educationWeg: this.form.educationWeg,
+//						ageWeg: this.form.ageWeg,
+//						requirement_p: this.form.requirement_p,
+//						personality: this.form.personality.toString(),
+//						professionReq:this.form.professionReq,
+//						professionWeg:this.form.professionWeg
+//					})
+//					.then(function(response) {
+//						console.log(response);
+//					})
+//					.catch(function(error) {
+//						console.log(error);
+//					});
 			},
 			onNext() {
 
