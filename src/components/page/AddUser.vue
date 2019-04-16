@@ -39,10 +39,12 @@
 						<el-input v-model="form.age"></el-input>
 					</el-form-item>
 					<el-form-item label="出生地">
-						<el-input v-model="form.birthPlace"></el-input>
+						<el-cascader :options="form.birthoptions" v-model="form.birthPlace" @change="handlebirthChange">
+						</el-cascader>
 					</el-form-item>
 					<el-form-item label="居住地">
-						<el-input v-model="form.address"></el-input>
+						<el-cascader :options="form.addressoptions" v-model="form.address" @change="handleaddressChange">
+						</el-cascader>
 					</el-form-item>
 					<el-form-item label="联系方式">
 						<el-input v-model="form.phoneNumber"></el-input>
@@ -79,10 +81,23 @@
 						<el-input v-model="form.hobby"></el-input>
 					</el-form-item>
 					<el-form-item label="是否离异">
+<<<<<<< HEAD
 						<el-input v-model="form.isDivorce"></el-input>
 					</el-form-item>
 					<el-form-item label="是否有车">
 						<el-input v-model="form.haveCar"></el-input>
+=======
+						<el-select v-model="form.isDivorce" placeholder="请选择">
+							<el-option key="0" label="是" value="0"></el-option>
+							<el-option key="1" label="否" value="1"></el-option>
+						</el-select>
+					</el-form-item>
+					<el-form-item label="是否有车">
+						<el-select v-model="form.haveCar" placeholder="请选择">
+							<el-option key="0" label="是" value="0"></el-option>
+							<el-option key="1" label="否" value="1"></el-option>
+						</el-select>
+>>>>>>> 31c0213ba29875cb9364a91c9c2e66dbe4c36354
 					</el-form-item>
 					<el-form-item label="子女数量">
 						<el-input-number v-model="form.childNumber" controls-position="right" :min="0" :max="10"></el-input-number>
@@ -268,6 +283,11 @@
 </template>
 
 <script>
+	import {
+		regionData,
+		CodeToText,
+		TextToCode
+	} from 'element-china-area-data';
 	export default {
 		name: 'newuser',
 		data: function() {
@@ -296,9 +316,12 @@
 					age: '',
 					birthday: '',
 					education: '',
+<<<<<<< HEAD
 					birthPlace: '',
 					phoneNumber: '',
 					address: '',
+=======
+>>>>>>> 31c0213ba29875cb9364a91c9c2e66dbe4c36354
 					profession: '',
 					company: '',
 					salary: '',
@@ -314,8 +337,8 @@
 					houseReq: '2',
 					salaryReq: '',
 					educationReq: '',
-					professionReq:'',
-					professionWeg:'',
+					professionReq: '',
+					professionWeg: '',
 					minAgeReq: '',
 					maxAgeReq: '',
 					requirement: '',
@@ -331,9 +354,16 @@
 					requirement_p: null,
 					data2: generateData2(),
 					personality: [],
+<<<<<<< HEAD
 					professionReq:null,
      				professionWeg:null,
      				tbirht:null
+=======
+					birthoptions: regionData,
+					birthPlace: ['310000','310100','310109'],
+					addressoptions: regionData,
+					address: ['310000','310100','310109']
+>>>>>>> 31c0213ba29875cb9364a91c9c2e66dbe4c36354
 				},
 				requireVisible: false,
 				active: 0,
@@ -442,7 +472,7 @@ var formData = new FormData();
 //					});
 			},
 			onNext() {
-
+				alert(this.form.personality);
 				this.active = this.active + 2;
 			},
 			onPre() {
@@ -450,6 +480,12 @@ var formData = new FormData();
 			},
 			onClear() {
 				this.form = JSON.parse(JSON.stringify(this.defaultForm));
+			},
+			handlebirthChange(value) {
+				console.log(value);
+			},
+			handleaddressChange(value) {
+				console.log(value);
 			}
 		}
 	}
