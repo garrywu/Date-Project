@@ -26,13 +26,14 @@
 					</el-form-item>
 					<el-form-item label="性别">
 						<el-select v-model="form.gender" placeholder="请选择">
-							<el-option key="male" label="男" value="male"></el-option>
-							<el-option key="female" label="女" value="female"></el-option>
+							<el-option key="M" label="男" value="M"></el-option>
+							<el-option key="F" label="女" value="F"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item label="出生日期">
 						<el-col :span="11">
-							<el-date-picker type="date" placeholder="选择日期" v-model="form.birthday" style="width: 100%;"></el-date-picker>
+							<el-date-picker type="date" placeholder="选择日期" value-format="yyyy-MM-dd" v-model="form.birthday"
+							 style="width: 100%;"></el-date-picker>
 						</el-col>
 					</el-form-item>
 					<el-form-item label="年龄">
@@ -81,12 +82,11 @@
 						<el-input v-model="form.hobby"></el-input>
 					</el-form-item>
 					<el-form-item label="是否离异">
-<<<<<<< HEAD
-						<el-input v-model="form.isDivorce"></el-input>
+						<el-input v-model="form.isDivorce">
+						</el-input>
 					</el-form-item>
 					<el-form-item label="是否有车">
 						<el-input v-model="form.haveCar"></el-input>
-=======
 						<el-select v-model="form.isDivorce" placeholder="请选择">
 							<el-option key="0" label="是" value="0"></el-option>
 							<el-option key="1" label="否" value="1"></el-option>
@@ -97,7 +97,7 @@
 							<el-option key="0" label="是" value="0"></el-option>
 							<el-option key="1" label="否" value="1"></el-option>
 						</el-select>
->>>>>>> 31c0213ba29875cb9364a91c9c2e66dbe4c36354
+
 					</el-form-item>
 					<el-form-item label="子女数量">
 						<el-input-number v-model="form.childNumber" controls-position="right" :min="0" :max="10"></el-input-number>
@@ -124,7 +124,7 @@
 								<el-row>
 									<el-col :span="12">
 										<el-form-item label="接受离异">
-											<el-checkbox v-model="form.divorceReq"></el-checkbox>
+											<el-checkbox v-model="form.divorceReq" true-label='0' false-label='1'></el-checkbox>
 										</el-form-item>
 									</el-col>
 									<el-col :span="12">
@@ -138,7 +138,7 @@
 								<el-row>
 									<el-col :span="12">
 										<el-form-item label="接受有子">
-											<el-checkbox v-model="form.childReq"></el-checkbox>
+											<el-checkbox v-model="form.childReq" true-label='0' false-label='1'></el-checkbox>
 										</el-form-item>
 									</el-col>
 									<el-col :span="12">
@@ -153,7 +153,7 @@
 								<el-row>
 									<el-col :span="12">
 										<el-form-item label="接受外地">
-											<el-checkbox v-model="form.localReq"></el-checkbox>
+											<el-checkbox v-model="form.localReq" true-label='0' false-label='1'></el-checkbox>
 										</el-form-item>
 									</el-col>
 									<el-col :span="12">
@@ -167,7 +167,7 @@
 								<el-row>
 									<el-col :span="12">
 										<el-form-item label="是否有车">
-											<el-checkbox v-model="form.carReq"></el-checkbox>
+											<el-checkbox v-model="form.carReq" true-label='0' false-label='1'></el-checkbox>
 										</el-form-item>
 									</el-col>
 									<el-col :span="12">
@@ -233,28 +233,28 @@
 								</el-row>
 							</el-col>
 
-<el-col :span="18">
-        <el-row>
-         <el-col :span="10">
-          <el-form-item label="职业要求">
-           <el-input v-model="form.professionReq"></el-input>
-          </el-form-item>
-         </el-col>
-         <el-col :span="2">
-          <p>&nbsp;</p >
-         </el-col>
-         <el-col :span="12">
-          <el-rate v-model="form.professionWeg" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
-           :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
-          </el-rate>
-         </el-col>
-        </el-row>
-       </el-col>
+							<el-col :span="18">
+								<el-row>
+									<el-col :span="10">
+										<el-form-item label="职业要求">
+											<el-input v-model="form.professionReq"></el-input>
+										</el-form-item>
+									</el-col>
+									<el-col :span="2">
+										<p>&nbsp;</p>
+									</el-col>
+									<el-col :span="12">
+										<el-rate v-model="form.professionWeg" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
+										 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
+										</el-rate>
+									</el-col>
+								</el-row>
+							</el-col>
 
 							<el-col :span="12">
 								<el-form-item label="年龄要求">
 									<el-date-picker v-model="form.tbirth" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期"
-									 :default-time="['00:00:00', '23:59:59']">
+									  value-format="yyyy-MM-dd">
 									</el-date-picker>
 									<el-rate v-model="form.ageWeg" class="userrate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :show-text="true"
 									 :texts="['不重要', '不太重要', '一般', '比较重要', '非常重要']">
@@ -316,12 +316,9 @@
 					age: '',
 					birthday: '',
 					education: '',
-<<<<<<< HEAD
 					birthPlace: '',
 					phoneNumber: '',
 					address: '',
-=======
->>>>>>> 31c0213ba29875cb9364a91c9c2e66dbe4c36354
 					profession: '',
 					company: '',
 					salary: '',
@@ -354,16 +351,13 @@
 					requirement_p: null,
 					data2: generateData2(),
 					personality: [],
-<<<<<<< HEAD
-					professionReq:null,
-     				professionWeg:null,
-     				tbirht:null
-=======
+					professionReq: null,
+					professionWeg: null,
+					tbirht: null,
 					birthoptions: regionData,
-					birthPlace: ['310000','310100','310109'],
+					birthPlace: ['310000', '310100', '310109'],
 					addressoptions: regionData,
-					address: ['310000','310100','310109']
->>>>>>> 31c0213ba29875cb9364a91c9c2e66dbe4c36354
+					address: ['310000', '310100', '310109']
 				},
 				requireVisible: false,
 				active: 0,
@@ -377,9 +371,11 @@
 		},
 		methods: {
 			onSubmit() {
+// 				alert(this.form.tbirth[0]);
+ 				alert(this.form.localReq);
 				//this.$message.success('客户添加成功');
 				this.active = 0;
-var formData = new FormData();
+				var formData = new FormData();
 				formData.append('age', this.form.age);
 				formData.append('customerName', this.form.customerName);
 				formData.append('gender', this.form.gender);
@@ -425,54 +421,54 @@ var formData = new FormData();
 					.catch((err) => {
 						return err
 					});
-//				this.$axios.post('love/api/addCustomer', {
-//					    age:this.form.age,
-//					    gender:this.form.gender,
-//						birthday: this.form.birthday,
-//						education: this.form.education,
-//						phoneNumber:this.form.phoneNumber,
-//						birthPlace: this.form.birthPlace,
-//						address: this.form.address,
-//						profession: this.form.profession,
-//						company: this.form.company,
-//						salary: this.form.salary,
-//						houseNumber: this.form.houseNumber,
-//						hobby: this.form.hobby,
-//						isDivorce: this.form.isDivorce,
-//						childNumber: this.form.childNumber,
-//						haveCar: this.form.haveCar,
-//						divorceReq: this.form.divorceReq,
-//						carReq: this.form.carReq,
-//						localReq: this.form.localReq,
-//						childReq: this.form.childReq,
-//						houseReq: this.form.houseReq,
-//						salaryReq: this.form.salaryReq,
-//						educationReq: this.form.educationReq,
-//						minAgeReq: this.form.tbirth[0],
-//						maxAgeReq: this.form.tbirth[1],
-//						requirement: this.form.requirement,
-//						divorceWeg: this.form.divorceWeg,
-//						childWeg: this.form.childWeg,
-//						localWeg: this.form.localWeg,
-//						carWeg: this.form.carWeg,
-//						houseWeg: this.form.houseWeg,
-//						salaryWeg: this.form.salaryWeg,
-//						educationWeg: this.form.educationWeg,
-//						ageWeg: this.form.ageWeg,
-//						requirement_p: this.form.requirement_p,
-//						personality: this.form.personality.toString(),
-//						professionReq:this.form.professionReq,
-//						professionWeg:this.form.professionWeg
-//					})
-//					.then(function(response) {
-//						console.log(response);
-//					})
-//					.catch(function(error) {
-//						console.log(error);
-//					});
+				//				this.$axios.post('love/api/addCustomer', {
+				//					    age:this.form.age,
+				//					    gender:this.form.gender,
+				//						birthday: this.form.birthday,
+				//						education: this.form.education,
+				//						phoneNumber:this.form.phoneNumber,
+				//						birthPlace: this.form.birthPlace,
+				//						address: this.form.address,
+				//						profession: this.form.profession,
+				//						company: this.form.company,
+				//						salary: this.form.salary,
+				//						houseNumber: this.form.houseNumber,
+				//						hobby: this.form.hobby,
+				//						isDivorce: this.form.isDivorce,
+				//						childNumber: this.form.childNumber,
+				//						haveCar: this.form.haveCar,
+				//						divorceReq: this.form.divorceReq,
+				//						carReq: this.form.carReq,
+				//						localReq: this.form.localReq,
+				//						childReq: this.form.childReq,
+				//						houseReq: this.form.houseReq,
+				//						salaryReq: this.form.salaryReq,
+				//						educationReq: this.form.educationReq,
+				//						minAgeReq: this.form.tbirth[0],
+				//						maxAgeReq: this.form.tbirth[1],
+				//						requirement: this.form.requirement,
+				//						divorceWeg: this.form.divorceWeg,
+				//						childWeg: this.form.childWeg,
+				//						localWeg: this.form.localWeg,
+				//						carWeg: this.form.carWeg,
+				//						houseWeg: this.form.houseWeg,
+				//						salaryWeg: this.form.salaryWeg,
+				//						educationWeg: this.form.educationWeg,
+				//						ageWeg: this.form.ageWeg,
+				//						requirement_p: this.form.requirement_p,
+				//						personality: this.form.personality.toString(),
+				//						professionReq:this.form.professionReq,
+				//						professionWeg:this.form.professionWeg
+				//					})
+				//					.then(function(response) {
+				//						console.log(response);
+				//					})
+				//					.catch(function(error) {
+				//						console.log(error);
+				//					});
 			},
 			onNext() {
-				alert(this.form.personality);
+				//alert(this.form.birthday);
 				this.active = this.active + 2;
 			},
 			onPre() {
