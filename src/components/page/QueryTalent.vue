@@ -2,68 +2,51 @@
 	<div class="table">
 		<div class="crumbs">
 			<el-breadcrumb separator="/">
-				<el-breadcrumb-item><i class="el-icon-lx-cascades"></i> 查询用户</el-breadcrumb-item>
+				<el-breadcrumb-item><i class="el-icon-lx-global"></i> Talent Pool</el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
 		<div class="container">
 			<div class="handle-box">
-				<el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
-				<el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-				<el-button type="primary" icon="search" @click="search">搜索</el-button>
+				<!-- <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button> -->
+				<el-input v-model="select_word" placeholder="Type Talent Here" class="handle-input mr10"></el-input>
+				<el-button type="primary" icon="search" @click="search">Search</el-button>
 			</div>
 			<el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
 				<el-table-column type="expand">
 					<template slot-scope="props">
 						<el-row>
 							<el-col :span="22">
-								<el-form label-position="left" inline class="demo-table-expand">
-									<el-form-item label="性别">
-										<span>{{ props.row.gender }}</span>
+								<el-form label-position="left" class="demo-table-expand"> 
+									<el-form-item label="Owner Site">
+										<span>{{ props.row.p_owner_site }}</span>
 									</el-form-item>
-									<el-form-item label="出生地">
-										<span>{{ props.row.birthPlace }}</span>
+									<el-form-item label="Desc">
+										<span>{{ props.row.p_desc }}</span>
 									</el-form-item>
-									<el-form-item label="职位">
-										<span>{{ props.row.profession }}</span>
+									<el-form-item label="Overview">
+										<span>{{ props.row.p_overview }}</span>
 									</el-form-item>
-									<el-form-item label="联系方式">
-										<span>{{ props.row.phoneNumber }}</span>
-									</el-form-item>
-									<el-form-item label="年薪">
-										<span>{{ props.row.salary }}</span>
-									</el-form-item>
-									<el-form-item label="房产数量">
-										<span>{{ props.row.houseNumber }}</span>
-									</el-form-item>
-									<el-form-item label="个人爱好">
-										<span>{{ props.row.hobby }}</span>
-									</el-form-item>
-									<el-form-item label="是否离异">
-										<span>{{ props.row.isDivorce }}</span>
-									</el-form-item>
-									<el-form-item label="个性描述"> <span>{{ props.row.personality }}</span>
-									</el-form-item>
-									<el-form-item > <i class="el-icon-info" ><span @click="getReq" style="cursor:pointer;">&nbsp;点击查看他的要求</span></i>
+									<el-form-item label="Documments"> <i class="el-icon-download" ><span @click="getReq" style="cursor:pointer;">&nbsp;Click to download</span></i>
 									</el-form-item>
 								</el-form>
 							</el-col>
-							<el-col :span="2">
-									<el-button class=ai-search size='small' type="success" @click="aiSearch">进行AI匹配</el-button>
+							<el-col :span="1">
+									<el-button class=ai-search size='small' icon="el-icon-message" type="success" @click="aiSearch">Mail</el-button>
 							</el-col>
 						</el-row>
 					</template>
 				</el-table-column>
 				<el-table-column type="selection" width="55" align="center"></el-table-column>
-				<el-table-column prop="birthday" label="出生日期" sortable width="150">
+				<el-table-column prop="p_owner" label="Project Owner" sortable width="150">
 				</el-table-column>
-				<el-table-column prop="customerName" label="姓名" width="120">
+				<el-table-column prop="p_end_dt" label="Project End Dt" width="120">
 				</el-table-column>
-				<el-table-column prop="address" label="住址" :formatter="formatter">
+				<el-table-column prop="p_name" label="Project Name" :formatter="formatter">
 				</el-table-column>
-				<el-table-column label="操作" width="180" align="center">
+				<el-table-column label="Operation" width="180" align="center">
 					<template slot-scope="scope">
-						<el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-						<el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+						<i class="el-icon-star-off" v-if="scope.row.p_favor" style="font-size: 25px; color: #409eff;"  @click="addFavor(scope.$index, scope.row)"></i>
+						<i class="el-icon-star-on" v-if="!scope.row.p_favor" style="font-size: 25px; color: #409eff;"></i><!-- @click="removeFavor(scope.$index, scope.row)" -->
 					</template>
 				</el-table-column>
 			</el-table>
@@ -130,12 +113,12 @@
 				select_word: '',
 				del_list: [],
 				is_search: false,
-				editVisible: false,
-				delVisible: false,
+				favorVisible: '',
+				fillVisible: 'none',
 				form: {
-					customerName: '',
-					birthday: '',
-					address: ''
+					p_name: '',
+					p_end_dt: '',
+					p_owner: ''
 				},
 				idx: -1,
 				delname:'',
@@ -144,21 +127,22 @@
 		},
 		created() {
 			this.getData();
+			
 		},
 		computed: {
 			data() {
 				return this.tableData.filter((d) => {
 					let is_del = false;
 					for (let i = 0; i < this.del_list.length; i++) {
-						if (d.customerName === this.del_list[i].customerName) {
+						if (d.p_name === this.del_list[i].p_name) {
 							is_del = true;
 							break;
 						}
 					}
 					if (!is_del) {
-						if (d.customerName.indexOf(this.select_word) > -1 ||
-							d.address.indexOf(this.select_word) > -1 ||
-							d.birthday.indexOf(this.select_word) > -1) {
+						if (d.p_name.indexOf(this.select_word) > -1 ||
+							d.p_owner.indexOf(this.select_word) > -1 ||
+							d.p_end_dt.indexOf(this.select_word) > -1) {
 							return d;
 						}
 					}
@@ -173,20 +157,29 @@
 			},
 			// 获取 easy-mock 的模拟数据
 			getData() {
+				
+
+// 				fetchData(this.query).then(res => {
+// 				    console.log(res);
+// 				    this.tableData = res.list;
+// 				    this.pageTotal = res.pageTotal || 50;
+// 					alert(this.tableData);
+// 				});
+				
+				
 				// 开发环境使用 easy-mock 数据，正式环境使用 json 文件
-				/* if (process.env.NODE_ENV === 'development') {
+				 if (process.env.NODE_ENV === 'development') {
 					// this.url = '/ms/query/list';
-					this.url = 'https://www.easy-mock.com/mock/5c6c0a072be418020f2f8198/example/ms/query/list';
-				}; */
-				this.url='love/api/findCustomerAll'
+					this.url = 'https://www.fastmock.site/mock/205ab70c496096f44bf5b49028e5040e/querytalent/list';
+				}; 
+// 				this.url='love/api/findCustomerAll'
 				this.$axios.post(this.url, {
 					page: this.cur_page
 				}).then((res) => {
 					console.log(res);
 					if(res.data.success){
 						console.log(res.data.data);
-						this.tableData = res.data.data;
-						//alert(JSON.stringify(this.tableData));
+						this.tableData = res.data.list;
 					}else{
 						//出错处理 你可以自己选择方式
 						alert(res.data.erroMessage);
@@ -200,27 +193,37 @@
 				this.is_search = true;
 			},
 			formatter(row, column) {
-				return row.address;
+				return row.p_name;
 			},
 			filterTag(value, row) {
 				return row.tag === value;
 			},
-			handleEdit(index, row) {
+			addFavor(index, row) {
 				this.idx = index;
 				const item = this.tableData[index];
-				this.form = {
-					name: item.name,
-					date: item.date,
-					address: item.address
-				}
-				this.editVisible = true;
+				this.tableData[index].p_favor = false;
 			},
-			handleDelete(index, row) {
+			removeFavor(index, row) {
 				this.idx = index;
-				this.delVisible = true;
-				this.delname = row.username;
-				this.delmobile = row.mobile;
+				const item = this.tableData[index];
+				this.tableData[index].p_favor = true;
 			},
+// 			handleEdit(index, row) {
+// 				this.idx = index;
+// 				const item = this.tableData[index];
+// 				this.form = {
+// 					name: item.name,
+// 					date: item.date,
+// 					address: item.address
+// 				}
+// 				this.editVisible = true;
+// 			},
+// 			handleDelete(index, row) {
+// 				this.idx = index;
+// 				this.delVisible = true;
+// 				this.delname = row.username;
+// 				this.delmobile = row.mobile;
+// 			},
 			delAll() {
 				const length = this.multipleSelection.length;
 				let str = '';

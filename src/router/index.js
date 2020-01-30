@@ -17,7 +17,7 @@ export default new Router({
                 {
                     path: '/dashboard',
                     component: resolve => require(['../components/page/Dashboard.vue'], resolve),
-                    meta: { title: '系统首页' }
+                    meta: { title: 'Search Pane' }
                 },
                 {
                     path: '/icon',
@@ -27,24 +27,24 @@ export default new Router({
                 {
                     path: '/table',
                     component: resolve => require(['../components/page/BaseTable.vue'], resolve),
-                    meta: { title: '用户管理' }
+                    meta: { title: 'All My Talents' }
                 },
                 {
                     path: '/tabs',
                     component: resolve => require(['../components/page/Tabs.vue'], resolve),
-                    meta: { title: 'tab选项卡' }
+                    meta: { title: 'My Favour' }
                 },
                 {
-                    path: '/AddUser',
-					name: 'AddUser',
-                    component: resolve => require(['../components/page/AddUser.vue'], resolve),
-                    meta: { title: '新增用户' }
+                    path: '/UploadTalent',
+					name: 'UploadTalent',
+                    component: resolve => require(['../components/page/UploadTalent.vue'], resolve),
+                    meta: { title: 'New Talent' }
                 },
                 {
                     // 富文本编辑器组件
-                    path: '/QueryUser',
-                    component: resolve => require(['../components/page/QueryUser.vue'], resolve),
-                    meta: { title: '查询用户' }
+                    path: '/QueryTalent',
+                    component: resolve => require(['../components/page/QueryTalent.vue'], resolve),
+                    meta: { title: 'Talent Pool' }
                 },
 				{
 				    // 修改用户
@@ -73,11 +73,11 @@ export default new Router({
                     meta: { title: '文件上传' }   
                 },
 				                {
-				    // 相亲管理
-				    path: '/DateManagement',
-					name: 'DateManagement',
-				    component: resolve => require(['../components/page/DateManagement.vue'], resolve),
-				    meta: { title: '相亲管理' }
+				    // List all my talents
+				    path: '/MyTalent',
+					name: 'MyTalent',
+				    component: resolve => require(['../components/page/MyTalent.vue'], resolve),
+				    meta: { title: 'Talent List' }
 				},
                 {
                     // vue-schart组件

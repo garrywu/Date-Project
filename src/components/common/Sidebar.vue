@@ -10,7 +10,7 @@
                         </template>
                         <template v-for="subItem in item.subs">
                             <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
-                                <template slot="title">{{ subItem.title }}</template>
+                                <template slot="title"><i :class="subItem.icon"></i><span slot="title">{{ subItem.title }}</span></template>
                                 <el-menu-item v-for="(threeItem,i) in subItem.subs" :key="i" :index="threeItem.index">
                                     {{ threeItem.title }}
                                 </el-menu-item>
@@ -39,9 +39,9 @@
                 collapse: false,
                 items: [
                     {
-                        icon: 'el-icon-lx-home',
+                        icon: 'el-icon-lx-search',
                         index: 'dashboard',
-                        title: '系统首页'
+                        title: 'Search Pane'
                     },
 //                     {
 //                         icon: 'el-icon-lx-cascades',
@@ -49,9 +49,9 @@
 //                         title: '基础表格'
 //                     },
                     {
-                        icon: 'el-icon-lx-copy',
+                        icon: 'el-icon-lx-favor',
                         index: 'tabs',
-                        title: '信息中心'
+                        title: 'My Favor'
                     },
 //                     {
 //                         icon: 'el-icon-lx-copy',
@@ -59,28 +59,26 @@
 //                         title: 'tab选项卡'
 //                     },
                     {
-                        icon: 'el-icon-lx-calendar',
-                        index: '3',
-                        title: '用户管理',
-                        subs: [
-                            {
-                                index: 'AddUser',
-                                title: '新增用户'
-                            },
-							{
-							    index: 'QueryUser',
-							    title: '查询用户'
-							},
-                            {
-                                index: 'upload',
-                                title: '文件上传'
-                            }
-                        ]
+                        icon: 'el-icon-lx-global',
+                        index: 'QueryTalent',
+                        title: 'Talent Pool',
                     },
 					{
-					    icon: 'el-icon-lx-emoji',
-					    index: 'DateManagement',
-					    title: '相亲管理'
+					    icon: 'el-icon-lx-profile',
+					    index: '3',
+					    title: 'My Talent',
+						subs: [
+						    {
+								icon: 'el-icon-lx-profile',
+						        index: 'UploadTalent',
+						        title: 'New Talent'
+						    },
+							{
+								icon: 'el-icon-lx-searchlist',
+							    index: 'MyTalent',
+							    title: 'Talent List'
+							}
+							]
 					},
                     {
                         icon: 'el-icon-lx-emoji',

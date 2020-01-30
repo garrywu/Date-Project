@@ -1,43 +1,110 @@
 {
-    "list": [{
-        "date": "1997-11-11",
-        "name": "林丽",
-        "address": "吉林省 辽源市 龙山区"
-    }, {
-        "date": "1987-09-24",
-        "name": "文敏",
-        "address": "江西省 萍乡市 芦溪县"
-    }, {
-        "date": "1996-08-08",
-        "name": "杨秀兰",
-        "address": "黑龙江省 黑河市 五大连池市"
-    }, {
-        "date": "1978-06-18",
-        "name": "魏强",
-        "address": "广东省 韶关市 始兴县"
-    }, {
-        "date": "1977-07-09",
-        "name": "石秀兰",
-        "address": "江苏省 宿迁市 宿豫区"
-    }, {
-        "date": "1994-09-20",
-        "name": "朱洋",
-        "address": "海外 海外 -"
-    }, {
-        "date": "1980-01-22",
-        "name": "傅敏",
-        "address": "海外 海外 -"
-    }, {
-        "date": "1985-10-10",
-        "name": "毛明",
-        "address": "内蒙古自治区 包头市 九原区"
-    }, {
-        "date": "1975-09-08",
-        "name": "何静",
-        "address": "西藏自治区 阿里地区 普兰县"
-    }, {
-        "date": "1970-06-07",
-        "name": "郭秀英",
-        "address": "四川省 巴中市 恩阳区"
-    }]
+  "success": true,
+  "list": [
+    {
+      "customerName": "阎磊",
+      "gender": "男",
+      "birthday": "1989-05-20",
+      "address": "宁夏回族自治区 吴忠市 其它区",
+      "birthPlace": "湖南省 邵阳市 北塔区",
+      "profession": "经理",
+      "salary": 145739,
+      "houseNumber": 3,
+      "isDivorce": "是",
+      "personality": "加业酸节器。",
+      "requirement": "风此样边作素界西在性示认美约海金年受去角。",
+      "phoneNumber": 14425046347,
+      "hobby": "拳击"
+    },
+    {
+      "customerName": "徐伟",
+      "gender": "女",
+      "birthday": "2002-07-13",
+      "address": "新疆维吾尔自治区 哈密地区 伊吾县",
+      "birthPlace": "河南省 南阳市 西峡县",
+      "profession": "CEO",
+      "salary": 137456,
+      "houseNumber": 2,
+      "isDivorce": "否",
+      "personality": "保革从题长。",
+      "requirement": "铁已置实八条保院育话过十活实研象所史回华。",
+      "phoneNumber": 15426033933,
+      "hobby": "睡觉"
+    },
+    {
+      "customerName": "谢洋",
+      "gender": "男",
+      "birthday": "2008-01-12",
+      "address": "黑龙江省 齐齐哈尔市 碾子山区",
+      "birthPlace": "天津 天津市 红桥区",
+      "profession": "打工仔",
+      "salary": 163793,
+      "houseNumber": 5,
+      "isDivorce": "是",
+      "personality": "百低三号县。",
+      "requirement": "商始类段才元本传近组完标需电便分没片大明。",
+      "phoneNumber": 15359534726,
+      "hobby": "看电影"
+    },
+    {
+      "customerName": "曹平",
+      "gender": "女",
+      "birthday": "1999-08-04",
+      "address": "上海 上海市 闸北区",
+      "birthPlace": "重庆 重庆市 万盛区",
+      "profession": "经理",
+      "salary": 99299,
+      "houseNumber": 4,
+      "isDivorce": "否",
+      "personality": "第决府油精。",
+      "requirement": "金接象年区花并体线构联界划完研能确广区世。",
+      "phoneNumber": 15794921149,
+      "hobby": "拳击"
+    },
+    {
+      "customerName": "陈秀英",
+      "gender": "男",
+      "birthday": "1988-09-27",
+      "address": "台湾 屏东县 南州乡",
+      "birthPlace": "江西省 宜春市 宜丰县",
+      "profession": "CEO",
+      "salary": 86440,
+      "houseNumber": 2,
+      "isDivorce": "是",
+      "personality": "机两比号铁。",
+      "requirement": "物象整称话识或叫节属当气见它头线单布己看。",
+      "phoneNumber": 15574602441,
+      "hobby": "睡觉"
+    },
+    {
+      "customerName": "周艳",
+      "gender": "女",
+      "birthday": "1996-08-16",
+      "address": "河北省 沧州市 献县",
+      "birthPlace": "香港特别行政区 九龙 九龙城区",
+      "profession": "打工仔",
+      "salary": 123813,
+      "houseNumber": 5,
+      "isDivorce": "否",
+      "personality": "边公术所命。",
+      "requirement": "统团影参以究五最了交期离压花作族装料立相。",
+      "phoneNumber": 15502493238,
+      "hobby": "看电影"
+    },
+    {
+      "customerName": "董明",
+      "gender": "男",
+      "birthday": "2009-07-03",
+      "address": "四川省 遂宁市 大英县",
+      "birthPlace": "上海 上海市 徐汇区",
+      "profession": "经理",
+      "salary": 197881,
+      "houseNumber": 5,
+      "isDivorce": "是",
+      "personality": "观计能方科。",
+      "requirement": "工严写值才作几治效马王候产必温格非住被基。",
+      "phoneNumber": 14745295121,
+      "hobby": "拳击"
+    }
+  ]
 }
